@@ -4,6 +4,7 @@ using StoreManagementSystem.Core.Interfaces;
 using StoreManagementSystem.Core.Services;
 using StoreManagementSystem.Data.Contexts;
 using StoreManagementSystem.Data.Entities.Models;
+using StoreManagementSystem.Extensions;
 
 namespace StoreManagementSystem
 {
@@ -13,7 +14,7 @@ namespace StoreManagementSystem
         {
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-            string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
             builder.Services.AddDbContext<StoreManagementDbContext>(options =>
                 options
@@ -21,7 +22,7 @@ namespace StoreManagementSystem
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddScoped<IHomeService,HomeService>();
+            
 
             builder.Services.AddDefaultIdentity<User>(options =>
             {
@@ -35,6 +36,8 @@ namespace StoreManagementSystem
                 .AddEntityFrameworkStores<StoreManagementDbContext>();
 
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddApplicationServices();
 
             WebApplication app = builder.Build();
 
