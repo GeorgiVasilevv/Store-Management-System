@@ -1,0 +1,117 @@
+﻿@using StoreManagementSystem.Core.Models.Home;
+@using StoreManagementSystem.Core.ViewModels.Home;
+@using System.Globalization;
+
+@model StoreCombinedModel
+
+@{
+    ViewData["Title"] = "Home Page";
+    IList<StoreIndexViewModel> topRatedStores = Model?.TopRatedStores?.ToList();
+    IList<StoreIndexViewModel> recentStores = Model?.RecentStores?.ToList();
+}
+@if (Model == null)
+{
+
+    <div class="container mt-5">
+        <div class="d-flex justify-content-center">
+            <div class="p-5 bg-light w-75">
+                <h1 class="display-4">Oops!</h1>
+                <h3>Looks like there aren't any stores yet.</h3>
+                <p>Please check back later or create a store to get started.</p>
+                <p class="lead">
+                    @if (User.Identity?.IsAuthenticated ?? false)
+                    {
+                        <a asp-controller="Store" asp-action="Add" class="btn btn-primary btn-lg" role="button">Add Store</a>
+                    }
+                </p>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="mb-5"></div>
+    <div class="d-flex justify-content-center text-center">
+        <h5 class="text-white bg-dark p-3 m-3" style="width: 300px;">Top Rated Stores</h5>
+    </div>
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+
+        <div class="carousel-inner">
+            @for (int i = 0; i < topRatedStores.Count(); i++)
+            {
+                var store = topRatedStores[i];
+                <div class="carousel-item @(i == 0 ? "active" : string.Empty)">
+                    <img class="d-block w-100" style="height:500px; height: 500px;border-top: 3px solid grey;
+            border-bottom: 3px solid grey;
+            border-left: 3px solid grey;
+            border-right: 3px solid grey;"
+                         src="@store.ImageUrl" alt="@store.Title">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>
+                            <a class="btn btn-dark" asp-controller="Store" aspaction="Details"
+                               asp-route-id="@store.Id"> @store.Title</a>
+                            <button type="button" class="btn btn-dark" href="#">Rating: @store.Rating?.ToString().Replace(",",".")</button>
+                        </h5>
+                    </div>
+                </div>
+            }
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+
+    <style>
+        #carouselExampleControls2 .carousel-control-prev-icon,
+        #carouselExampleControls2 .carousel-control-next-icon {
+            filter: invert(100%);
+        }
+    </style>
+
+    <div class="container" style="margin-bottom: 6rem"></div>
+    <div class="mb-5"></div>
+    <div class="d-flex justify-content-center text-center">
+        <h5 class="text-white bg-dark p-3 m-1" style="width: 300px;">Most Recent Stores</h5>
+    </div>
+    <div id="carouselExampleControls2" style="margin: 1.5rem" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @for (int i = 0; i < recentStores.Count(); i += 3)
+            {
+                <div class="carousel-item @(i == 0 ? "active" : string.Empty)">
+                    <div class="row">
+                        @for (int j = i; j < i + 3 && j < recentStores.Count(); j++)
+                        {
+                            var recentStore = recentStores[j];
+                            <div class="col-md-4">
+                                <img class="d-block w-100" style="height: 500px;border-top: 3px solid grey;
+            border-bottom: 3px solid grey;
+            border-left: 3px solid grey;
+            border-right: 3px solid grey;" src="@recentStore.ImageUrl" alt="@recentStore.Title">
+                                <h5 class="text-center">
+                                    <a class="btn btn-dark" asp-controller="Store" asp-action="Details"
+                                       asp-route-id="@recentStore.Id"> @recentStore.Title</a>
+                                </h5>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="carousel-caption d-none d-md-block"></div>
+        <button class="carousel-control-prev" style="margin-left: -120px" type="button" data-bs-target="#carouselExampleControls2" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" style="margin-right: -120px" type="button" data-bs-target="#carouselExampleControls2" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+}
