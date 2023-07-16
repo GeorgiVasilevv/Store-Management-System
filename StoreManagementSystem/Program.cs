@@ -5,6 +5,7 @@ using StoreManagementSystem.Core.Services;
 using StoreManagementSystem.Data.Contexts;
 using StoreManagementSystem.Data.Entities.Models;
 using StoreManagementSystem.Extensions;
+using StoreManagementSystem.ModelBinders;
 
 namespace StoreManagementSystem
 {
@@ -35,7 +36,12 @@ namespace StoreManagementSystem
             })
                 .AddEntityFrameworkStores<StoreManagementDbContext>();
 
-            builder.Services.AddControllersWithViews();
+            builder.Services
+                .AddControllersWithViews()
+                .AddMvcOptions(opt =>
+                {
+                    opt.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                });
 
             builder.Services.AddApplicationServices();
 
