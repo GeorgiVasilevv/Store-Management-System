@@ -25,6 +25,9 @@ namespace StoreManagementSystem.Data.Configurations
                 Rating = 0,
                 ImageUrl = "https://cdn.shopify.com/s/files/1/0635/0815/files/claremont-store-iamge_1000x.jpg?v=1667541605",
                 OwnerId = Guid.Parse("F1CCA3DF-6437-423B-6256-08DB7EE9BE60"),
+                Address = "ul. Petko R. Slaveikov 36",
+                CityId = 22,
+                ProvinceId = 23
             };
             stores.Add(store);
 
@@ -36,6 +39,9 @@ namespace StoreManagementSystem.Data.Configurations
                 Rating = 0,
                 ImageUrl = "https://bigsee.eu/wp-content/uploads/2022/04/DSC4685.jpg",
                 OwnerId = Guid.Parse("F1CCA3DF-6437-423B-6256-08DB7EE9BE60"),
+                Address = "ul. Asen Hristoforov 6",
+                CityId = 2,
+                ProvinceId = 13
             };
             stores.Add(store);
 
@@ -48,6 +54,9 @@ namespace StoreManagementSystem.Data.Configurations
                 Rating = 0,
                 ImageUrl = "https://planomagazine.com/wp-content/uploads/2021/04/Plano-Magazine-Prized-Kicks-sneaker-store-now-open_feature-1170x556.jpg",
                 OwnerId = Guid.Parse("F1CCA3DF-6437-423B-6256-08DB7EE9BE60"),
+                Address = "bul. Cherni Vrah 47",
+                CityId = 1,
+                ProvinceId = 20
             };
             stores.Add(store);
 
@@ -58,6 +67,9 @@ namespace StoreManagementSystem.Data.Configurations
                 Description = "This store has different types of designer wear",
                 ImageUrl = "https://media.architecturaldigest.com/photos/56045fcfcbec99cc0f9f7574/16:9/w_1280,c_limit/dam-images-daily-2014-10-jill-stuart-jill-stuart-soho.jpg",
                 OwnerId = Guid.Parse("96521533-2970-4085-B6D0-08DB81187EB1"),
+                Address = "ul. Mara Buneva 52",
+                CityId = 1,
+                ProvinceId = 20
             };
             stores.Add(store);
 

@@ -19,7 +19,9 @@ namespace StoreManagementSystem.Data.Contexts
         public DbSet<Shoes> Shoes { get; set; } = null!;
         public DbSet<ShoesSize> ShoesSizes { get; set; } = null!;
         public DbSet<Store> Stores { get; set; } = null!;
-        public DbSet<ClothesSize> ClothesSizes { get; set; } = null!;
+        public DbSet<ClothingSize> ClothesSizes { get; set; } = null!;
+        public DbSet<City> Cities { get; set; } = null!;
+        public DbSet<Province> Provinces { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

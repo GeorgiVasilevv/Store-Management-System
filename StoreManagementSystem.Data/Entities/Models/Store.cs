@@ -34,6 +34,19 @@ namespace StoreManagementSystem.Data.Entities.Models
         public decimal Rating { get; set; }
 
         [Required]
+        public string Address { get; set; } = null!;
+
+        [Required]
+        [ForeignKey(nameof(City))]
+        public int CityId { get; set; }
+        public City City { get; set; } = null!;
+
+        [Required]
+        [ForeignKey(nameof(Province))]
+        public int ProvinceId { get; set; }
+        public Province Province { get; set; } = null!;
+
+        [Required]
         [MaxLength(UrlMaxLength)]
         public string ImageUrl { get; set; } = null!;
 

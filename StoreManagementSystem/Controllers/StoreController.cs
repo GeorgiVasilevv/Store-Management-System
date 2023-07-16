@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StoreManagementSystem.Core.Models.Store;
 
 namespace StoreManagementSystem.Controllers
 {
@@ -14,7 +15,8 @@ namespace StoreManagementSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            return View();
+            StoreFormModel storeModel = new StoreFormModel();
+            return View(storeModel);
         }
     }
 }

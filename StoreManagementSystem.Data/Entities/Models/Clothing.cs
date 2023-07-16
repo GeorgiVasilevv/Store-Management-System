@@ -38,7 +38,7 @@ namespace StoreManagementSystem.Data.Entities.Models
         [Required]
         [ForeignKey(nameof(ClothingSize))]
         public int ClothingSizeId { get; set; }
-        public ClothesSize ClothingSize { get; set; } = null!;
+        public ClothingSize ClothingSize { get; set; } = null!;
 
         [Required]
         [MaxLength(UrlMaxLength)]
