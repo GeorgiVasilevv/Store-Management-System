@@ -10,8 +10,4 @@
     <ProjectReference Include="..\StoreManagementSystem.Data\StoreManagementSystem.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
-
 </Project>

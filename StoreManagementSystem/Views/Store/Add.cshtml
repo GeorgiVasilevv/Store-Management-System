@@ -1,10 +1,14 @@
 ﻿@model StoreFormModel
 @{
-    ViewBag.Title = "Add House";
+    ViewBag.Title = "Add Store";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
-<partial></partial>
-// Adress City Oblast Zip
+<partial name="_StoreFormPartial" model="@Model"></partial>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial">
+}

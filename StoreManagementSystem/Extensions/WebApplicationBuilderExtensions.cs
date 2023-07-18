@@ -8,6 +8,9 @@ namespace StoreManagementSystem.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IHomeService, HomeService>();
+            services.AddScoped<ICityService, CityService>();
+            services.AddScoped<IProvinceService, ProvinceService>();
+            services.AddScoped<IStoreService, StoreService>();
 
             return services;
         }

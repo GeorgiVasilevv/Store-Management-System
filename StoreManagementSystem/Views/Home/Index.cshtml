@@ -6,8 +6,8 @@
 
 @{
     ViewData["Title"] = "Home Page";
-    IList<StoreIndexViewModel> topRatedStores = Model?.TopRatedStores?.ToList();
-    IList<StoreIndexViewModel> recentStores = Model?.RecentStores?.ToList();
+    IList<StoreIndexViewModel> topRatedStores = Model?.TopRatedStores?.ToList()!;
+    IList<StoreIndexViewModel> recentStores = Model?.RecentStores?.ToList()!;
 }
 @if (Model == null)
 {
