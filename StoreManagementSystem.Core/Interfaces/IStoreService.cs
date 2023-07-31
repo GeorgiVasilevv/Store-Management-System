@@ -1,14 +1,13 @@
-﻿using StoreManagementSystem.Core.Models.Store;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using StoreManagementSystem.Core.Models.ServiceModels;
+using StoreManagementSystem.Core.Models.Store;
+using StoreManagementSystem.Core.Models.ViewModels.Store;
 
 namespace StoreManagementSystem.Core.Interfaces
 {
     public interface IStoreService
     {
-        Task CreateAsync(StoreFormModel storeModel, string ownerId);
+        Task CreateAsync(StoreAddFormModel storeModel, string ownerId);
+
+        Task<AllStoresFilteredAndPagedServiceModel> AllAsync(AllStoresQueryModel queryModel);
     }
 }

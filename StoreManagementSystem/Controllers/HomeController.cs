@@ -21,7 +21,7 @@ namespace StoreManagementSystem.Controllers
         {
             StoreCombinedModel model = new StoreCombinedModel
             {
-                RecentStores = await homeService.GetTenMostRecentStores(),
+                RecentStores = await homeService.GetNineMostRecentStores(),
                 TopRatedStores = await homeService.GetThreeHighestRatingStores()
             };
 

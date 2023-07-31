@@ -1,9 +1,4 @@
 ﻿using StoreManagementSystem.Core.Models.Store;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StoreManagementSystem.Core.Interfaces
 {
@@ -11,5 +6,6 @@ namespace StoreManagementSystem.Core.Interfaces
     {
         Task<IEnumerable<StoreSelectProvinceFormModel>> GetAllProvincesOrderedAsync();
         Task<bool> ExistsByIdAsync(int id);
+        Task<IEnumerable<string>> AllProvincesNamesAsync();
     }
 }

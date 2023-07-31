@@ -9,7 +9,6 @@ namespace StoreManagementSystem.Data.Entities.Models
         //TODO Add Comments
         public Store()
         {
-            DateCreated = DateTime.UtcNow;
             Clothes = new List<Clothing>();
             Shoes = new List<Shoes>();
             Rating = 0;
@@ -34,6 +33,7 @@ namespace StoreManagementSystem.Data.Entities.Models
         public decimal Rating { get; set; }
 
         [Required]
+        [MaxLength(AddressMaxLength)]
         public string Address { get; set; } = null!;
 
         [Required]

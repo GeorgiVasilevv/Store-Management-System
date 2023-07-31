@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StoreManagementSystem.Core.Interfaces;
+using StoreManagementSystem.Core.Models.ServiceModels;
 using StoreManagementSystem.Core.Models.Store;
+using StoreManagementSystem.Core.Models.ViewModels.Store;
 using StoreManagementSystem.Extensions;
 
 namespace StoreManagementSystem.Controllers
@@ -19,16 +21,28 @@ namespace StoreManagementSystem.Controllers
             this.storeService = storeService;
         }
 
+        [HttpGet]
         [AllowAnonymous]
-        public IActionResult All()
+        public async Task<IActionResult> All([FromQuery]AllStoresQueryModel model)
         {
-            return View();
+            if (model.CurrentPage < 1)
+            {
+                model.CurrentPage = 1;
+            }
+
+            AllStoresFilteredAndPagedServiceModel serviceModel = await storeService.AllAsync(model);
+
+            model.Stores = serviceModel.Stores;
+            model.TotalStores = serviceModel.TotalStoresCount;
+            model.Provinces = await provinceService.AllProvincesNamesAsync();
+
+            return View(model);
         }
 
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            StoreFormModel storeModel = new StoreFormModel()
+            StoreAddFormModel storeModel = new StoreAddFormModel()
             {
                 Cities = await cityService.GetAllCitiesOrderedAsync(),
                 Provinces = await provinceService.GetAllProvincesOrderedAsync(),
@@ -39,7 +53,7 @@ namespace StoreManagementSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(StoreFormModel storeModel)
+        public async Task<IActionResult> Add(StoreAddFormModel storeModel)
         {
             bool cityExists = await cityService.ExistsByIdAsync(storeModel.CityId);
             bool provinceExists = await provinceService.ExistsByIdAsync(storeModel.ProvinceId);

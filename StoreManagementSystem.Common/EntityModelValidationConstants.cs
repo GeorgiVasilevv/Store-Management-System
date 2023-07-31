@@ -16,6 +16,9 @@ namespace StoreManagementSystem.Common
             public const int DescriptionMinLength = 5;
             public const int DescriptionMaxLength = 200;
 
+            public const int AddressMinLength = 5;
+            public const int AddressMaxLength = 100;
+
             public const int UrlMaxLength = 2048;
         }
         public static class Category

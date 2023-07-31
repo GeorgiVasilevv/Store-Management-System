@@ -1,0 +1,34 @@
+﻿@model StoreAllViewModel
+
+<style>
+    .fixed-image {
+        width: 414px;
+        height: 276px; 
+        object-fit: cover;
+    }
+</style>
+
+<div class="col-md-4" style="margin-bottom: 50px">
+    <div class="card mb-3" >
+        <img class="card-img-top fixed-image" src="@Model.ImageUrl" alt="House Image">
+        <div class="card-body text-center">
+            <h4>@Model.Title</h4>
+            <h6>Address: <b>@Model.Address</b></h6>
+            <h6>
+                Rating:
+                <b>@($"{Model.Rating.ToString().Replace(",", "."):f2} / 10.00")</b>
+            </h6>
+            <br />
+            <a asp-controller="House" asp-action="Details" asp-route-id="@Model.Id"
+               class="btn btn-success">Details</a>
+            @if (this.User.Identity?.IsAuthenticated ?? false)
+            {
+                <a asp-controller="House" asp-action="Edit" asp-route-id="@Model.Id"
+                   class="btn btn-warning">Edit</a>
+                <a asp-controller="House" asp-action="Delete" asp-routeid="@Model.Id"
+                   class="btn btn-danger">Delete</a>
+                <p></p>
+            }
+        </div>
+    </div>
+</div>

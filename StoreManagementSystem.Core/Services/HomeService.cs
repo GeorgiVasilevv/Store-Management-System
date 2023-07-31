@@ -2,11 +2,7 @@
 using StoreManagementSystem.Core.Interfaces;
 using StoreManagementSystem.Core.ViewModels.Home;
 using StoreManagementSystem.Data.Contexts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace StoreManagementSystem.Core.Services
 {
@@ -18,12 +14,13 @@ namespace StoreManagementSystem.Core.Services
         {
             this.dbContext = dbContext;
         }
-        public async Task<IEnumerable<StoreIndexViewModel>> GetTenMostRecentStores()
+        public async Task<IEnumerable<StoreIndexViewModel>> GetNineMostRecentStores()
         {
             return await dbContext
                 .Stores
+                .Where(s=> s.IsDeleted == false)
                 .OrderByDescending(s=> s.DateCreated)
-                .Take(10)
+                .Take(9)
                 .Select(s=> new StoreIndexViewModel()
                 {
                     Id = s.Id,
@@ -38,6 +35,7 @@ namespace StoreManagementSystem.Core.Services
         {
             return await dbContext
                 .Stores
+                .Where(s => s.IsDeleted == false)
                 .OrderByDescending(s => s.Rating)
                 .Take(3)
                 .Select(s => new StoreIndexViewModel()

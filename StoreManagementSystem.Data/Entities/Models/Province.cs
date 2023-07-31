@@ -21,6 +21,6 @@ namespace StoreManagementSystem.Data.Entities.Models
         [Required]
         public string Title { get; set; } = null!;
 
-        public ICollection<Store> Stores { get; set; }
+        public virtual ICollection<Store> Stores { get; set; }
     }
 }

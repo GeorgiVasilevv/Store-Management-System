@@ -8,6 +8,21 @@ namespace StoreManagementSystem.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Store> builder)
         {
+            builder
+              .HasOne(s => s.Province)
+              .WithMany(s => s.Stores)
+              .HasForeignKey(s => s.ProvinceId) // This line of code can be skipped due to Atrributes
+              .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+              .HasOne(s => s.City)
+              .WithMany(s=> s.Stores)
+              .HasForeignKey(s=> s.CityId) // This line of code can be skipped due to Atrributes
+              .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Property(s => s.DateCreated)
+                .HasDefaultValueSql("GETDATE()");
+
             builder.HasData(SeedStores());
         }
 

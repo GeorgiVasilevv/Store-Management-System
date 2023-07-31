@@ -1,5 +1,145 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model AllStoresQueryModel
 @{
+    ViewBag.Title = "All Houses";
 }
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+<div class="container" style="margin-top: 70px">
+    <form method="get" class="row justify-content-center mt-4">
+        <div class="form-group col-md-3 p-2" style="margin-right: 20px; margin-left: 100px">
+            <label asp-for="Province"></label>
+            <select asp-for="Province" class="form-control">
+                <option value="">All</option>
+                @foreach (var province in Model.Provinces)
+                {
+                    <option value="@province">@province</option>
+                }
+            </select>
+        </div>
+        <div class="form-group col-md-2 p-2" style="margin-right: 20px">
+            <label asp-for="SearchString"></label>
+            <input asp-for="SearchString" class="form-control">
+        </div>
+        <div class="form-group col-md-3 p-2" style="margin-right: 50px">
+            <label asp-for="StoreSorting"></label>
+            <select asp-for="StoreSorting" style="color: #8e8e8e" class="form-control">
+                <option value="" style="color: #212529">Please select type of sorting...</option>
+                <option value="0" style="color: #212529">Rating (Descending)</option>
+                <option value="1" style="color: #212529">Rating (Ascending)</option>
+                <option value="2" style="color: #212529">Newest</option>
+                <option value="3" style="color: #212529">Oldest</option>
+            </select>
+        </div>
+        <div class="form-group col-md-1 p-2 d-flex align-items-end">
+            <input type="submit" value="Search" class="btn btn-primary w-100" />
+        </div>
+    </form>
+</div>
+<div style="margin-top: 100px"></div>
+
+
+@if (!Model.Stores.Any())
+{
+    <h2 class="text-center">No stores found by the given criteria!</h2>
+}
+<div class="row">
+    @foreach (var store in Model.Stores)
+    {
+        <partial name="_StorePartial" model="@store" />
+    }
+</div>
+
+
+
+<style>
+    #loadMore {
+        width: 150px;
+        color: #fff;
+        display: block;
+        text-align: center;
+        margin: 20px 5%;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid transparent;
+        background-color: dimgray;
+        transition: .3s;
+    }
+
+    #loadLess {
+        width: 150px;
+        color: #fff;
+        display: block;
+        text-align: center;
+        margin: 20px 5%;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid transparent;
+        background-color: dimgray;
+        transition: .3s;
+    }
+
+        #loadLess:hover {
+            color: dimgray;
+            background-color: #fff;
+            border: 1px solid dimgray;
+            text-decoration: none;
+        }
+
+    #loadMore:hover {
+        color: dimgray;
+        background-color: #fff;
+        border: 1px solid dimgray;
+        text-decoration: none;
+    }
+</style>
+
+
+
+@{
+    int previousPage = Model.CurrentPage - 1;
+    if (previousPage < 1)
+    {
+        previousPage = 1;
+    }
+    int maxPage = (int)Math.Ceiling((double)Model.TotalStores /
+    Model.StoresPerPage);
+}
+
+@{
+
+    var shouldNextPageBeDisabled = Model.CurrentPage == maxPage ||
+    !Model.Stores.Any();
+}
+
+
+<div class="row justify-content-center">
+    <div class="col">
+        <div class="d-flex justify-content-center">
+            @if (Model.CurrentPage != 1 && Model.CurrentPage <= maxPage)
+            {
+                <a id="loadLess"
+                   class="btn btn-primary"
+                   asp-controller="Store"
+                   asp-action="All"
+                   asp-route-currentPage="@previousPage"
+                   asp-route-province="@Model.Province"
+                   asp-route-searchTerm="@Model.SearchString"
+                   asp-route-sorting="@((int?)Model.StoreSorting)">Load Less</a>
+            }
+
+            @if (!shouldNextPageBeDisabled)
+            {
+                <a id="loadMore"
+                   class="btn btn-primary"
+                   asp-controller="Store"
+                   asp-action="All"
+                   asp-route-currentPage="@(Model.CurrentPage + 1)"
+                   asp-route-province="@Model.Province"
+                   asp-route-searchTerm="@Model.SearchString"
+                   asp-route-sorting="@((int?)Model.StoreSorting)">Load More</a>
+            }
+        </div>
+    </div>
+</div>
+

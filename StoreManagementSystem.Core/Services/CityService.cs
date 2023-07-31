@@ -2,7 +2,6 @@
 using StoreManagementSystem.Core.Interfaces;
 using StoreManagementSystem.Core.Models.Store;
 using StoreManagementSystem.Data.Contexts;
-using System.Collections.Generic;
 
 namespace StoreManagementSystem.Core.Services
 {

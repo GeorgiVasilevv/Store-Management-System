@@ -3,9 +3,9 @@ using static StoreManagementSystem.Common.EntityModelValidationConstants.Store;
 
 namespace StoreManagementSystem.Core.Models.Store
 {
-    public class StoreFormModel
+    public class StoreAddFormModel
     {
-        public StoreFormModel()
+        public StoreAddFormModel()
         {
             Cities = new List<StoreSelectCityFormModel>();
             Provinces = new List<StoreSelectProvinceFormModel>();
@@ -22,6 +22,7 @@ namespace StoreManagementSystem.Core.Models.Store
         public string Description { get; set; } = null!;
 
         [Required]
+        [StringLength(AddressMaxLength, MinimumLength = AddressMinLength)]
         public string Address { get; set; } = null!;
 
         [Required]

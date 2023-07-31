@@ -14,6 +14,16 @@ namespace StoreManagementSystem.Core.Services
             this.dbContext = dbContext;
         }
 
+        public async Task<IEnumerable<string>> AllProvincesNamesAsync()
+        {
+            IEnumerable<string> allNames = await dbContext
+                .Provinces
+                .Select(p => p.Title)
+                .ToArrayAsync();
+
+            return allNames;
+        }
+
         public async Task<bool> ExistsByIdAsync(int id)
         {
             bool result = await dbContext

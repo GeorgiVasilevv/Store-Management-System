@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StoreManagementSystem.Data.Contexts;
 
@@ -11,9 +12,10 @@ using StoreManagementSystem.Data.Contexts;
 namespace StoreManagementSystem.Data.Migrations
 {
     [DbContext(typeof(StoreManagementDbContext))]
-    partial class StoreManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230730145906_AddFluentAPIRelationships")]
+    partial class AddFluentAPIRelationships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1160,7 +1162,7 @@ namespace StoreManagementSystem.Data.Migrations
                     b.HasOne("StoreManagementSystem.Data.Entities.Models.City", "City")
                         .WithMany("Stores")
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("StoreManagementSystem.Data.Entities.Models.User", "Owner")
