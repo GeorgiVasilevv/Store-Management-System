@@ -1,0 +1,37 @@
+﻿@model List<StoreAllViewModel>
+@{
+    ViewData["Title"] = "My Stores";
+}
+
+<style>
+    .fixed-image {
+        width: 406px;
+        height: 276px;
+        object-fit: cover;
+    }
+</style>
+
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+@if (!Model.Any())
+{
+    <div class="container">
+        <div class="row justify-content-center align-items-center" style="min-height: 50vh;">
+            <div class="col-sm-6 text-center">
+                <h2>You do not have any stores yet!</h2>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container" style="margin-top: 70px">
+        <div class="row">
+            @foreach (StoreAllViewModel store in Model)
+            {
+                <partial name="_StorePartial" model="store" />
+            }
+        </div>
+    </div>
+}

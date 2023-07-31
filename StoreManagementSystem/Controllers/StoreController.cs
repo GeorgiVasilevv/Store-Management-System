@@ -92,5 +92,17 @@ namespace StoreManagementSystem.Controllers
 
             return RedirectToAction("All", "Store");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Mine()
+        {
+            List<StoreAllViewModel> myHouses = new List<StoreAllViewModel>();
+
+            string userId = User.GetId()!;
+
+            myHouses.AddRange(await storeService.AllByUserIdAsync(userId));
+
+            return View(myHouses);
+        }
     }
 }

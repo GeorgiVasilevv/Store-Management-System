@@ -58,6 +58,7 @@ namespace StoreManagementSystem.Core.Services
             };
 
             IEnumerable<StoreAllViewModel> allStores = await storesQuery
+                .Where(s=> !s.IsDeleted)
                 .Skip((queryModel.CurrentPage - 1) * queryModel.StoresPerPage)
                 .Take(queryModel.StoresPerPage)
                 .Select(s => new StoreAllViewModel()
@@ -77,6 +78,23 @@ namespace StoreManagementSystem.Core.Services
                 TotalStoresCount = totalStores,
                 Stores = allStores
             };
+        }
+
+        public async Task<IEnumerable<StoreAllViewModel>> AllByUserIdAsync(string userId)
+        {
+            IEnumerable<StoreAllViewModel> allUserStores = await dbContext.Stores
+                .Where(s => s.OwnerId.ToString() == userId && !s.IsDeleted)
+                .Select(s => new StoreAllViewModel()
+                {
+                    Id = s.Id,
+                    Title = s.Title,
+                    Address = s.Address,
+                    ImageUrl = s.ImageUrl,
+                    Rating = s.Rating,
+                })
+                .ToArrayAsync();
+
+            return allUserStores;
         }
 
         public async Task CreateAsync(StoreAddFormModel storeModel, string ownerId)
