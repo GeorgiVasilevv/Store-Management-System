@@ -120,7 +120,7 @@ namespace StoreManagementSystem.Core.Services
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<StoreDetailsViewModel?> DetailsAsync(int storeId)
+        public async Task<StoreDetailsViewModel> DetailsAsync(int storeId)
         {
             ProductStoreDetailsViewModel[] allProducts = await dbContext.Clothes
                 .Where(c => !c.IsDeleted && c.StoreId == storeId)
@@ -154,7 +154,7 @@ namespace StoreManagementSystem.Core.Services
                    CityName = s.City.Title,
                    Products = allProducts,
                })
-               .FirstOrDefaultAsync();
+               .FirstAsync();
 
             return currentStore;
 
