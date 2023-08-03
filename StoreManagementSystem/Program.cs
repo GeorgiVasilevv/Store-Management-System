@@ -45,6 +45,11 @@ namespace StoreManagementSystem
 
             builder.Services.AddApplicationServices();
 
+            var cultureInfo = new System.Globalization.CultureInfo("en-US");
+            System.Globalization.CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
+
             WebApplication app = builder.Build();
 
             if (app.Environment.IsDevelopment())

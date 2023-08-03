@@ -1,0 +1,103 @@
+﻿@model StoreDetailsViewModel
+@{
+    ViewBag.Title = "Store Details";
+}
+
+<style>
+    .grey-background {
+        background-color: #f0f0f0;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .fixed-image {
+        width: 296px;
+        height: 197px;
+        object-fit: cover;
+    }
+
+    .white-rectangle {
+        background-color: #ffffff;
+        height: 70px;
+        margin: 30px auto;
+        width: 104%;
+        margin-left: -2%;
+        border-radius: 5px;
+    }
+
+    .grey-box {
+        background-color: #f0f0f0;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .btn-details {
+        background-color: #17a2b8;
+        color: #fff;
+        border-color: #17a2b8;
+        border-radius: 5px;
+    }
+
+</style>
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="container grey-background">
+    <div class="row">
+        <div class="col-md-3">
+            <img src="@Model.ImageUrl" alt="Profile Image" class="img-fluid fixed-image" style="object-fit:cover ; border-radius: 25px">
+        </div>
+        <div class="col-md-9">
+            <h1>@Model.Title</h1>
+            <p>
+                <strong>Description:</strong><br />
+                @Model.Description
+            </p>
+            <p>
+                <strong>Location:</strong> @Model.CityName, @Model.Address <br />
+                <strong>Rating:</strong> @Model.Rating / 10.00 <br />
+                <strong>Date Created:</strong> @Model.DateCreated.ToString("yyyy-MM-dd")
+            </p>
+        </div>
+    </div>
+    @if (User.Identity?.IsAuthenticated ?? false)
+    {
+        <div class="row mt-4">
+            <div class="col-md-12 text-center">
+                <a asp-controller="Store" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit Store</a>
+                <a asp-controller="Store" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete Store</a>
+                <div class="mt-4">
+                    <a asp-controller="Product" asp-action="Add" class="btn btn-success">Add Product</a>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="white-rectangle"></div>
+
+    <div class="row mt-4">
+        <div class="col-md-12 text-center">
+            <div class="justify-content-center d-flex">
+                <h2 style="background-color: dimgray; color: white; padding: 10px;border-radius: 5px;">Store Items</h2>
+            </div>
+            <div class="grey-box">
+                <div class="row">
+                    @foreach (var item in Model.Products)
+                    {
+                        <div class="col-md-4 mb-3">
+                            <div class="card">
+                                <img src="@item.ImageUrl" alt="@item.Title" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title">@item.Title</h5>
+                                    <p class="card-text">Price: £@item.Price</p>
+                                    <a asp-controller="Product" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-details">Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

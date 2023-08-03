@@ -25,10 +25,6 @@ namespace StoreManagementSystem.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> All([FromQuery]AllStoresQueryModel model)
         {
-            if (model.CurrentPage < 1)
-            {
-                model.CurrentPage = 1;
-            }
 
             AllStoresFilteredAndPagedServiceModel serviceModel = await storeService.AllAsync(model);
 
@@ -103,6 +99,23 @@ namespace StoreManagementSystem.Controllers
             myHouses.AddRange(await storeService.AllByUserIdAsync(userId));
 
             return View(myHouses);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Details(int id)
+        {
+            StoreDetailsViewModel? storeDetailsViewModel = await storeService.DetailsAsync(id);
+
+            if (storeDetailsViewModel == null)
+            {
+                ViewBag.ErrorMessage = "The Store with the provided id does not exist!";
+
+                return RedirectToAction("All", "Store");
+            }
+
+
+            return View(storeDetailsViewModel);
         }
     }
 }

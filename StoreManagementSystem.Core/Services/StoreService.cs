@@ -2,10 +2,12 @@
 using StoreManagementSystem.Core.Interfaces;
 using StoreManagementSystem.Core.Models.ServiceModels;
 using StoreManagementSystem.Core.Models.Store;
+using StoreManagementSystem.Core.Models.ViewModels.Products;
 using StoreManagementSystem.Core.Models.ViewModels.Store;
 using StoreManagementSystem.Core.Models.ViewModels.Store.Enums;
 using StoreManagementSystem.Data.Contexts;
 using StoreManagementSystem.Data.Entities.Models;
+using System.Linq;
 
 namespace StoreManagementSystem.Core.Services
 {
@@ -38,6 +40,10 @@ namespace StoreManagementSystem.Core.Services
                     .Where(h => EF.Functions.Like(h.Title, wildCard) ||
                                 EF.Functions.Like(h.Address, wildCard));
             }
+            if (queryModel.CurrentPage < 1)
+            {
+                queryModel.CurrentPage = 1;
+            }
 
             storesQuery = queryModel.StoreSorting switch
             {
@@ -53,12 +59,12 @@ namespace StoreManagementSystem.Core.Services
                 StoreSorting.RatingAscending => storesQuery
                     .OrderBy(s => s.Rating),
 
-                _ => storesQuery.OrderByDescending(s=> s.Id)
-                                .ThenBy(s=> s.DateCreated)
+                _ => storesQuery.OrderByDescending(s => s.OwnerId)
+                                .ThenBy(s => s.DateCreated)
             };
 
             IEnumerable<StoreAllViewModel> allStores = await storesQuery
-                .Where(s=> !s.IsDeleted)
+                .Where(s => !s.IsDeleted)
                 .Skip((queryModel.CurrentPage - 1) * queryModel.StoresPerPage)
                 .Take(queryModel.StoresPerPage)
                 .Select(s => new StoreAllViewModel()
@@ -112,6 +118,46 @@ namespace StoreManagementSystem.Core.Services
 
             await dbContext.Stores.AddAsync(store);
             await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<StoreDetailsViewModel?> DetailsAsync(int storeId)
+        {
+            ProductStoreDetailsViewModel[] allProducts = await dbContext.Clothes
+                .Where(c => !c.IsDeleted && c.StoreId == storeId)
+                .Select(c => new ProductStoreDetailsViewModel
+                {
+                    Title = c.Title,
+                    ImageUrl = c.ImageUrl,
+                    Price = c.Price,
+                })
+                .Union(dbContext.Shoes
+                .Where(s => !s.IsDeleted && s.StoreId == storeId)
+                .Select(s => new ProductStoreDetailsViewModel
+                {
+                    Title = s.Title,
+                    ImageUrl = s.ImageUrl,
+                    Price = s.Price,
+                }))
+                .ToArrayAsync();
+
+            var currentStore = await dbContext.Stores
+               .Where(s => !s.IsDeleted && s.Id == storeId)
+               .Select(s => new StoreDetailsViewModel
+               {
+                   Id = s.Id,
+                   Title = s.Title,
+                   Address = s.Address,
+                   ImageUrl = s.ImageUrl,
+                   Rating = s.Rating,
+                   Description = s.Description,
+                   DateCreated = s.DateCreated,
+                   CityName = s.City.Title,
+                   Products = allProducts,
+               })
+               .FirstOrDefaultAsync();
+
+            return currentStore;
+
         }
     }
 }

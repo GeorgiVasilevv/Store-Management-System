@@ -172,7 +172,7 @@ namespace StoreManagementSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -196,7 +196,7 @@ namespace StoreManagementSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cities");
+                    b.ToTable("Cities", (string)null);
 
                     b.HasData(
                         new
@@ -503,7 +503,7 @@ namespace StoreManagementSystem.Data.Migrations
 
                     b.HasIndex("StoreId");
 
-                    b.ToTable("Clothes");
+                    b.ToTable("Clothes", (string)null);
 
                     b.HasData(
                         new
@@ -535,7 +535,7 @@ namespace StoreManagementSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ClothesSizes");
+                    b.ToTable("ClothesSizes", (string)null);
 
                     b.HasData(
                         new
@@ -579,7 +579,7 @@ namespace StoreManagementSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Provinces");
+                    b.ToTable("Provinces", (string)null);
 
                     b.HasData(
                         new
@@ -776,7 +776,7 @@ namespace StoreManagementSystem.Data.Migrations
 
                     b.HasIndex("StoreId");
 
-                    b.ToTable("Shoes");
+                    b.ToTable("Shoes", (string)null);
                 });
 
             modelBuilder.Entity("StoreManagementSystem.Data.Entities.Models.ShoesSize", b =>
@@ -792,7 +792,7 @@ namespace StoreManagementSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShoesSizes");
+                    b.ToTable("ShoesSizes", (string)null);
 
                     b.HasData(
                         new
@@ -923,7 +923,7 @@ namespace StoreManagementSystem.Data.Migrations
 
                     b.HasIndex("ProvinceId");
 
-                    b.ToTable("Stores");
+                    b.ToTable("Stores", (string)null);
 
                     b.HasData(
                         new

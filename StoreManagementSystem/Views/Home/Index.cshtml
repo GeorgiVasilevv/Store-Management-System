@@ -48,7 +48,7 @@ else
                          src="@store.ImageUrl" alt="@store.Title">
                     <div class="carousel-caption d-none d-md-block">
                         <h5>
-                            <a class="btn btn-dark" asp-controller="Store" aspaction="Details"
+                            <a class="btn btn-dark" asp-controller="Store" asp-action="Details"
                                asp-route-id="@store.Id"> @store.Title</a>
                             <button type="button" class="btn btn-dark" href="#">Rating: @store.Rating?.ToString().Replace(",",".")</button>
                         </h5>
