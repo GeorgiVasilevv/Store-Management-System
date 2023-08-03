@@ -10,5 +10,7 @@ namespace StoreManagementSystem.Core.Interfaces
         Task<AllStoresFilteredAndPagedServiceModel> AllAsync(AllStoresQueryModel queryModel);
         Task<IEnumerable<StoreAllViewModel>> AllByUserIdAsync(string userId);
         Task<StoreDetailsViewModel> DetailsAsync(int storeId);
+        Task<bool> ExistsByIdAsync(int storeId);
+        Task<StoreAddFormModel> GetStoreForEditByIdAsync();
     }
 }

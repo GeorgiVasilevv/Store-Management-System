@@ -159,5 +159,34 @@ namespace StoreManagementSystem.Core.Services
             return currentStore;
 
         }
+
+        public async Task<bool> ExistsById(int storeId)
+        {
+            bool result = await dbContext
+                .Stores
+                .Where(s=> !s.IsDeleted)
+                .AnyAsync(s=> s.Id == storeId);
+
+            return result;
+        }
+
+        public async Task<StoreAddFormModel> GetStoreForEditByIdAsync(int storeId)
+        {
+            StoreAddFormModel storeModel = await dbContext
+                .Stores
+                .Where(s => !s.IsDeleted && s.Id == storeId)
+                .Select(s => new StoreAddFormModel()
+                {
+                    Address = s.Address,
+                    CityId = s.CityId,
+                    Description = s.Description,
+                    ImageUrl = s.ImageUrl,
+                    ProvinceId = s.ProvinceId,
+                    Title = s.Title
+                })
+                .FirstAsync();
+
+            return storeModel;
+        }
     }
 }

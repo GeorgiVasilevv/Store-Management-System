@@ -16,7 +16,6 @@
 </head>
 <body>
     <header>
-        <partial name="_NotificationsPartial" />
         <style>
             .bg-smoke-gray {
                 background-color: #999999;
@@ -70,5 +69,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <partial name="_NotificationsPartial" />
 </body>
 </html>

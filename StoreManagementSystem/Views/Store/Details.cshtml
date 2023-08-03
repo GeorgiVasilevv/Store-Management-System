@@ -48,7 +48,7 @@
         <div class="col-md-3">
             <img src="@Model.ImageUrl" alt="Profile Image" class="img-fluid fixed-image" style="object-fit:cover ; border-radius: 25px">
         </div>
-        <div class="col-md-9">
+        <div class="col-md-6">
             <h1>@Model.Title</h1>
             <p>
                 <strong>Description:</strong><br />
@@ -60,19 +60,18 @@
                 <strong>Date Created:</strong> @Model.DateCreated.ToString("yyyy-MM-dd")
             </p>
         </div>
-    </div>
-    @if (User.Identity?.IsAuthenticated ?? false)
-    {
-        <div class="row mt-4">
-            <div class="col-md-12 text-center">
-                <a asp-controller="Store" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit Store</a>
-                <a asp-controller="Store" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete Store</a>
-                <div class="mt-4">
+        @if (User.Identity?.IsAuthenticated ?? false)
+        {
+            <div class="col-md-3 text-center" style="padding-top: 15px; padding-right: 70px">
+                    <a asp-controller="Store" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit Store</a>
+                    <a asp-controller="Store" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete Store</a>
+                <div class="container" style="margin-top: 80px">
                     <a asp-controller="Product" asp-action="Add" class="btn btn-success">Add Product</a>
                 </div>
             </div>
-        </div>
-    }
+        }
+    </div>
+
 
     <div class="white-rectangle"></div>
 
