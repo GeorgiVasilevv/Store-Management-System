@@ -80,7 +80,10 @@ namespace StoreManagementSystem.Controllers
             try
             {
                 string ownerId = this.User.GetId()!;
-                await storeService.CreateAsync(storeModel, ownerId!);
+                int storeId = await storeService
+                    .CreateAndReturnIdAsync(storeModel, ownerId!);
+
+                return RedirectToAction("Details", "Store", new { id = storeId });
             }
             catch (Exception)
             {
@@ -93,21 +96,20 @@ namespace StoreManagementSystem.Controllers
                 return View(storeModel);
             }
 
-            return RedirectToAction("All", "Store");
         }
 
         [HttpGet]
         public async Task<IActionResult> Mine()
         {
 
-            List<StoreAllViewModel> myHouses = new List<StoreAllViewModel>();
+            List<StoreAllViewModel> myStores = new List<StoreAllViewModel>();
             string userId = User.GetId()!;
 
             try
             {
-                myHouses.AddRange(await storeService.AllByUserIdAsync(userId));
+                myStores.AddRange(await storeService.AllByUserIdAsync(userId));
 
-                return View(myHouses);
+                return View(myStores);
 
             }
             catch (Exception)
@@ -156,8 +158,8 @@ namespace StoreManagementSystem.Controllers
                 return View(formModel);
             }
 
-            bool houseExists = await storeService.ExistsByIdAsync(id);
-            if (!houseExists)
+            bool storeExists = await storeService.ExistsByIdAsync(id);
+            if (!storeExists)
             {
                 TempData[ErrorMessage] = "The Store with the provided id does not exist!";
 
@@ -196,8 +198,8 @@ namespace StoreManagementSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            bool houseExists = await storeService.ExistsByIdAsync(id);
-            if (!houseExists)
+            bool storeExists = await storeService.ExistsByIdAsync(id);
+            if (!storeExists)
             {
                 TempData[ErrorMessage] = "The Store with the provided id does not exist!";
 

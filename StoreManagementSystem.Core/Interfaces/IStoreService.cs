@@ -6,7 +6,7 @@ namespace StoreManagementSystem.Core.Interfaces
 {
     public interface IStoreService
     {
-        Task CreateAsync(StoreAddFormModel storeModel, string ownerId);
+        Task<int> CreateAndReturnIdAsync(StoreAddFormModel storeModel, string ownerId);
         Task<AllStoresFilteredAndPagedServiceModel> AllAsync(AllStoresQueryModel queryModel);
         Task<IEnumerable<StoreAllViewModel>> AllByUserIdAsync(string userId);
         Task<StoreDetailsViewModel> DetailsAsync(int storeId);

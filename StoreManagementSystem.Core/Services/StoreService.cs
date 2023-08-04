@@ -103,7 +103,7 @@ namespace StoreManagementSystem.Core.Services
             return allUserStores;
         }
 
-        public async Task CreateAsync(StoreAddFormModel storeModel, string ownerId)
+        public async Task<int> CreateAndReturnIdAsync(StoreAddFormModel storeModel, string ownerId)
         {
             Store store = new Store()
             {
@@ -118,6 +118,8 @@ namespace StoreManagementSystem.Core.Services
 
             await dbContext.Stores.AddAsync(store);
             await dbContext.SaveChangesAsync();
+
+            return store.Id;
         }
 
         public async Task<StoreDetailsViewModel> DetailsAsync(int storeId)
