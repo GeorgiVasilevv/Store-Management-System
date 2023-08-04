@@ -1,5 +1,14 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model StoreAddFormModel
 @{
+    ViewData["Title"] = "Edit store";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+<partial name="_StoreFormPartial" model="@Model"></partial>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial"></partial>
 }

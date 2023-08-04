@@ -11,6 +11,8 @@ namespace StoreManagementSystem.Core.Interfaces
         Task<IEnumerable<StoreAllViewModel>> AllByUserIdAsync(string userId);
         Task<StoreDetailsViewModel> DetailsAsync(int storeId);
         Task<bool> ExistsByIdAsync(int storeId);
-        Task<StoreAddFormModel> GetStoreForEditByIdAsync();
+        Task<StoreAddFormModel> GetStoreForEditByIdAsync(int storeId);
+        Task<bool> IsUserOwnerOfStoreAsync(int storeId, string userId);
+        Task EditAsync(int storeId, StoreAddFormModel model);
     }
 }

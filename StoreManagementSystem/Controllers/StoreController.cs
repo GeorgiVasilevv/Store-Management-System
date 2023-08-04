@@ -5,6 +5,7 @@ using StoreManagementSystem.Core.Models.ServiceModels;
 using StoreManagementSystem.Core.Models.Store;
 using StoreManagementSystem.Core.Models.ViewModels.Store;
 using StoreManagementSystem.Extensions;
+using static StoreManagementSystem.Common.ToastrNotificationConstants;
 
 namespace StoreManagementSystem.Controllers
 {
@@ -38,14 +39,20 @@ namespace StoreManagementSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            StoreAddFormModel storeModel = new StoreAddFormModel()
+            try
             {
-                Cities = await cityService.GetAllCitiesOrderedAsync(),
-                Provinces = await provinceService.GetAllProvincesOrderedAsync(),
-            };
+                StoreAddFormModel storeModel = new StoreAddFormModel()
+                {
+                    Cities = await cityService.GetAllCitiesOrderedAsync(),
+                    Provinces = await provinceService.GetAllProvincesOrderedAsync(),
+                };
 
-            return View(storeModel);
-
+                return View(storeModel);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
         }
 
         [HttpPost]
@@ -92,19 +99,38 @@ namespace StoreManagementSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Mine()
         {
-            List<StoreAllViewModel> myHouses = new List<StoreAllViewModel>();
 
+            List<StoreAllViewModel> myHouses = new List<StoreAllViewModel>();
             string userId = User.GetId()!;
 
-            myHouses.AddRange(await storeService.AllByUserIdAsync(userId));
+            try
+            {
+                myHouses.AddRange(await storeService.AllByUserIdAsync(userId));
 
-            return View(myHouses);
+                return View(myHouses);
+
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+
+
         }
 
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
+            bool storeExists = await storeService.ExistsByIdAsync(id);
+
+            if (!storeExists)
+            {
+                TempData[ErrorMessage] = "The Store with the provided id does not exist!";
+
+                return RedirectToAction("All", "Store");
+            }
+
             try
             {
                 StoreDetailsViewModel storeDetailsViewModel = await storeService.DetailsAsync(id);
@@ -113,12 +139,101 @@ namespace StoreManagementSystem.Controllers
             }
             catch (Exception)
             {
+                return GeneralError();
+            }
+        }
 
-                TempData["ErrorMessage"] = "The Store with the provided id does not exist!";
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, StoreAddFormModel formModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                //Optionally we can add ModelError to visualize on the screen.
+
+                formModel.Cities = await cityService.GetAllCitiesOrderedAsync();
+                formModel.Provinces = await provinceService.GetAllProvincesOrderedAsync();
+
+                return View(formModel);
+            }
+
+            bool houseExists = await storeService.ExistsByIdAsync(id);
+            if (!houseExists)
+            {
+                TempData[ErrorMessage] = "The Store with the provided id does not exist!";
 
                 return RedirectToAction("All", "Store");
             }
 
+            string userId = User.GetId()!;
+            bool isUserOwner = await storeService.IsUserOwnerOfStoreAsync(id, userId);
+
+            if (!isUserOwner)
+            {
+                TempData[ErrorMessage] = "You must be the owner of the store.";
+
+                return RedirectToAction("Mine", "Store");
+            }
+
+            try
+            {
+                await storeService.EditAsync(id, formModel);
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError(string.Empty, "An unexpected error occured while trying to edit your store! Please try again later or contact us!");
+
+                formModel.Cities = await cityService.GetAllCitiesOrderedAsync();
+                formModel.Provinces = await provinceService.GetAllProvincesOrderedAsync();
+
+
+                return View(formModel);
+            }
+
+            return RedirectToAction("Details", "Store", new { id });
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            bool houseExists = await storeService.ExistsByIdAsync(id);
+            if (!houseExists)
+            {
+                TempData[ErrorMessage] = "The Store with the provided id does not exist!";
+
+                return RedirectToAction("All", "Store");
+            }
+
+            string userId = User.GetId()!;
+            bool isUserOwner = await storeService.IsUserOwnerOfStoreAsync(id, userId);
+
+            if (!isUserOwner)
+            {
+                TempData[ErrorMessage] = "You must be the owner of the store.";
+
+                return RedirectToAction("Mine", "Store");
+            }
+
+            try
+            {
+                StoreAddFormModel formModel = await storeService.GetStoreForEditByIdAsync(id);
+                formModel.Cities = await cityService.GetAllCitiesOrderedAsync();
+                formModel.Provinces = await provinceService.GetAllProvincesOrderedAsync();
+
+                return View(formModel);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+
+        }
+
+        private IActionResult GeneralError()
+        {
+            TempData[ErrorMessage] = "Unexpected error occured! Please try again later or contact us!";
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

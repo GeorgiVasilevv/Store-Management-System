@@ -160,12 +160,31 @@ namespace StoreManagementSystem.Core.Services
 
         }
 
-        public async Task<bool> ExistsById(int storeId)
+        public async Task EditAsync(int storeId, StoreAddFormModel model)
+        {
+            Store store = await dbContext
+                .Stores
+                .Where(s => !s.IsDeleted)
+                .FirstAsync(s => s.Id == storeId);
+
+
+            store.Address = model.Address;
+            store.Description = model.Description;
+            store.ImageUrl = model.ImageUrl;
+            store.ProvinceId = model.ProvinceId;
+            store.CityId = model.CityId;
+            store.Title = model.Title;
+
+            await dbContext.SaveChangesAsync();
+
+        }
+
+        public async Task<bool> ExistsByIdAsync(int storeId)
         {
             bool result = await dbContext
-                .Stores
-                .Where(s=> !s.IsDeleted)
-                .AnyAsync(s=> s.Id == storeId);
+               .Stores
+               .Where(s => !s.IsDeleted)
+               .AnyAsync(s => s.Id == storeId);
 
             return result;
         }
@@ -187,6 +206,16 @@ namespace StoreManagementSystem.Core.Services
                 .FirstAsync();
 
             return storeModel;
+        }
+
+        public async Task<bool> IsUserOwnerOfStoreAsync(int storeId, string userId)
+        {
+            bool isOwner = await dbContext
+                .Stores
+                .Where(s => !s.IsDeleted && s.Id == storeId)
+                .AnyAsync(s => s.OwnerId.ToString() == userId);
+
+            return isOwner;
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StoreManagementSystem.Common
 {
-    public class ToastrNotificationConstants
+    public static class ToastrNotificationConstants
     {
         public const string ErrorMessage = "ErrorMessage";
         public const string WarningMessage = "WarnMessage";
