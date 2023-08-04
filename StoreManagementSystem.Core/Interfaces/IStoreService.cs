@@ -14,5 +14,7 @@ namespace StoreManagementSystem.Core.Interfaces
         Task<StoreAddFormModel> GetStoreForEditByIdAsync(int storeId);
         Task<bool> IsUserOwnerOfStoreAsync(int storeId, string userId);
         Task EditAsync(int storeId, StoreAddFormModel model);
+        Task<StoreDeleteDetailsViewModel> GetStoreForDeleteAsync(int storeId);
+        Task DeleteAsync(int storeId);
     }
 }

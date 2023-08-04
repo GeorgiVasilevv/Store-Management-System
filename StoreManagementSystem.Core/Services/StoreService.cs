@@ -24,6 +24,7 @@ namespace StoreManagementSystem.Core.Services
         {
             IQueryable<Store> storesQuery = dbContext
                 .Stores
+                .Where(s=> !s.IsDeleted)
                 .AsQueryable();
 
 
@@ -37,8 +38,8 @@ namespace StoreManagementSystem.Core.Services
                 string wildCard = $"%{queryModel.SearchString.ToLower()}%";
 
                 storesQuery = storesQuery
-                    .Where(h => EF.Functions.Like(h.Title, wildCard) ||
-                                EF.Functions.Like(h.Address, wildCard));
+                    .Where(s => EF.Functions.Like(s.Title, wildCard) ||
+                                EF.Functions.Like(s.Address, wildCard));
             }
             if (queryModel.CurrentPage < 1)
             {
@@ -64,7 +65,6 @@ namespace StoreManagementSystem.Core.Services
             };
 
             IEnumerable<StoreAllViewModel> allStores = await storesQuery
-                .Where(s => !s.IsDeleted)
                 .Skip((queryModel.CurrentPage - 1) * queryModel.StoresPerPage)
                 .Take(queryModel.StoresPerPage)
                 .Select(s => new StoreAllViewModel()
@@ -120,6 +120,18 @@ namespace StoreManagementSystem.Core.Services
             await dbContext.SaveChangesAsync();
 
             return store.Id;
+        }
+
+        public async Task DeleteAsync(int storeId)
+        {
+            Store storeToDelete = await  dbContext
+                .Stores
+                .Where(s=> !s.IsDeleted)
+                .FirstAsync(s=> s.Id == storeId);
+
+            storeToDelete.IsDeleted = true;
+
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task<StoreDetailsViewModel> DetailsAsync(int storeId)
@@ -189,6 +201,24 @@ namespace StoreManagementSystem.Core.Services
                .AnyAsync(s => s.Id == storeId);
 
             return result;
+        }
+
+        public async Task<StoreDeleteDetailsViewModel> GetStoreForDeleteAsync(int storeId)
+        {
+            StoreDeleteDetailsViewModel store = await dbContext
+                .Stores
+                .Where(s => !s.IsDeleted && s.Id == storeId)
+                .Select(s => new StoreDeleteDetailsViewModel()
+                {
+                    Title = s.Title,
+                    Description = s.Description,
+                    DateCreated = s.DateCreated,
+                    ImageUrl = s.ImageUrl
+                })
+                .FirstAsync();
+
+
+            return store;
         }
 
         public async Task<StoreAddFormModel> GetStoreForEditByIdAsync(int storeId)

@@ -9,6 +9,10 @@ namespace StoreManagementSystem.Data.Configurations
         public void Configure(EntityTypeBuilder<Store> builder)
         {
             builder
+                .Property(s=> s.DateCreated)
+                .HasDefaultValueSql("GETDATE()");
+
+            builder
               .HasOne(s => s.Province)
               .WithMany(s => s.Stores)
               .HasForeignKey(s => s.ProvinceId) // This line of code can be skipped due to Atrributes
@@ -16,12 +20,10 @@ namespace StoreManagementSystem.Data.Configurations
 
             builder
               .HasOne(s => s.City)
-              .WithMany(s=> s.Stores)
-              .HasForeignKey(s=> s.CityId) // This line of code can be skipped due to Atrributes
+              .WithMany(s => s.Stores)
+              .HasForeignKey(s => s.CityId) // This line of code can be skipped due to Atrributes
               .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Property(s => s.DateCreated)
-                .HasDefaultValueSql("GETDATE()");
 
             builder.HasData(SeedStores());
         }

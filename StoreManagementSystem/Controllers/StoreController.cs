@@ -231,6 +231,77 @@ namespace StoreManagementSystem.Controllers
 
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            bool storeExists = await storeService.ExistsByIdAsync(id);
+            if (!storeExists)
+            {
+                TempData[ErrorMessage] = "The Store with the provided id does not exist!";
+
+                return RedirectToAction("All", "Store");
+            }
+
+            string userId = User.GetId()!;
+            bool isUserOwner = await storeService.IsUserOwnerOfStoreAsync(id, userId);
+
+            if (!isUserOwner)
+            {
+                TempData[ErrorMessage] = "You must be the owner of the store.";
+
+                return RedirectToAction("Mine", "Store");
+            }
+
+            try
+            {
+                StoreDeleteDetailsViewModel storeModel =
+                    await storeService.GetStoreForDeleteAsync(id);
+
+                return View(storeModel);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id, StoreDeleteDetailsViewModel formModel)
+        {
+
+            bool storeExists = await storeService.ExistsByIdAsync(id);
+            if (!storeExists)
+            {
+                TempData[ErrorMessage] = "The Store with the provided id does not exist!";
+
+                return RedirectToAction("All", "Store");
+            }
+
+            string userId = User.GetId()!;
+            bool isUserOwner = await storeService.IsUserOwnerOfStoreAsync(id, userId);
+
+            if (!isUserOwner)
+            {
+                TempData[ErrorMessage] = "You must be the owner of the store.";
+
+                return RedirectToAction("Mine", "Store");
+            }
+
+            try
+            {
+                await storeService.DeleteAsync(id);
+
+                this.TempData[SuccessMessage] = "The store was successfully deleted!";
+
+                return RedirectToAction("Mine", "Store");
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
         private IActionResult GeneralError()
         {
             TempData[ErrorMessage] = "Unexpected error occured! Please try again later or contact us!";
