@@ -83,6 +83,8 @@ namespace StoreManagementSystem.Controllers
                 int storeId = await storeService
                     .CreateAndReturnIdAsync(storeModel, ownerId!);
 
+                this.TempData[SuccessMessage] = "Store was added successfully!";
+
                 return RedirectToAction("Details", "Store", new { id = storeId });
             }
             catch (Exception)
@@ -190,6 +192,8 @@ namespace StoreManagementSystem.Controllers
 
                 return View(formModel);
             }
+
+            this.TempData[SuccessMessage] = "Store was edited successfully!";
 
             return RedirectToAction("Details", "Store", new { id });
 
