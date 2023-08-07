@@ -12,6 +12,7 @@ namespace StoreManagementSystem.Data.Entities.Models
             Clothes = new List<Clothing>();
             Shoes = new List<Shoes>();
             Rating = 0;
+            DateCreated = DateTime.UtcNow;
         }
         [Key]
         public int Id { get; set; }

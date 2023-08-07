@@ -8,9 +8,10 @@ namespace StoreManagementSystem.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Store> builder)
         {
-            builder
-                .Property(s=> s.DateCreated)
-                .HasDefaultValueSql("GETDATE()");
+            //This doesn't work. I dont know why.
+            //builder
+            //    .Property(s=> s.DateCreated)
+            //    .HasDefaultValueSql("GETDATE()");
 
             builder
               .HasOne(s => s.Province)
