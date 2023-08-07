@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StoreManagementSystem.Core.Interfaces;
 using StoreManagementSystem.Core.Models.ServiceModels;
+using StoreManagementSystem.Core.Models.ServiceModels.Statistics;
 using StoreManagementSystem.Core.Models.Store;
 using StoreManagementSystem.Core.Models.ViewModels.Products;
 using StoreManagementSystem.Core.Models.ViewModels.Store;
@@ -201,6 +202,15 @@ namespace StoreManagementSystem.Core.Services
                .AnyAsync(s => s.Id == storeId);
 
             return result;
+        }
+
+        public async Task<StatisticsServiceModel> GetStatisticsAsync()
+        {
+            return new StatisticsServiceModel()
+            {
+                TotalStores =await dbContext.Stores.CountAsync(),
+                TotalProducts =await dbContext.Clothes.CountAsync() + await dbContext.Shoes.CountAsync(),
+            };
         }
 
         public async Task<StoreDeleteDetailsViewModel> GetStoreForDeleteAsync(int storeId)

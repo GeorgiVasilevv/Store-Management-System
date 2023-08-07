@@ -5,10 +5,33 @@
 @model StoreCombinedModel
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Welcome to Store Management International!";
     IList<StoreIndexViewModel> topRatedStores = Model?.TopRatedStores?.ToList()!;
     IList<StoreIndexViewModel> recentStores = Model?.RecentStores?.ToList()!;
 }
+
+<style>
+    .custom-heading {
+        font-size: 3rem; /* Adjust the font size as needed */
+        color: #333; /* Text color */
+        background-color: #a9a9a9; /* Background color */
+        padding: 10px 20px; /* Add padding to create some space around the text */
+        border-radius: 8px; /* Add rounded corners */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
+        margin-bottom: 30px;
+    }
+</style>
+
+<h2 class="text-center mt-5 custom-heading" >@ViewBag.Title</h2>
+
+<div class="my-5 d-flex justify-content-center align-items-center">
+    <div id="statistics_box" style="background-color: #d3d3d3; width: 60%; max-height: 80vh; padding: 20px;  border-radius: 8px;">
+        <div class="row">
+            <h2 class="col-md-12 text-center" id="statistics_message"></h2>
+        </div>
+    </div>
+</div>
+
 @if (Model == null)
 {
 
@@ -30,7 +53,6 @@
 }
 else
 {
-    <div class="mb-5"></div>
     <div class="d-flex justify-content-center text-center">
         <h5 class="text-white bg-dark p-3 m-3" style="width: 300px;">Top Rated Stores</h5>
     </div>
@@ -113,4 +135,9 @@ else
             <span class="visually-hidden">Next</span>
         </button>
     </div>
+
+    @section Scripts
+    {
+    <script>statistics();</script>
+}
 }

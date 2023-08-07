@@ -1,4 +1,5 @@
 ﻿using StoreManagementSystem.Core.Models.ServiceModels;
+using StoreManagementSystem.Core.Models.ServiceModels.Statistics;
 using StoreManagementSystem.Core.Models.Store;
 using StoreManagementSystem.Core.Models.ViewModels.Store;
 
@@ -16,5 +17,7 @@ namespace StoreManagementSystem.Core.Interfaces
         Task EditAsync(int storeId, StoreAddFormModel model);
         Task<StoreDeleteDetailsViewModel> GetStoreForDeleteAsync(int storeId);
         Task DeleteAsync(int storeId);
+        Task<StatisticsServiceModel> GetStatisticsAsync();
+
     }
 }
