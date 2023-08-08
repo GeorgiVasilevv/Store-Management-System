@@ -1,9 +1,10 @@
 ﻿
+using StoreManagementSystem.Core.Models.ViewModels.Store.Interfaces;
 using System.ComponentModel.DataAnnotations;
 
 namespace StoreManagementSystem.Core.Models.ViewModels.Store
 {
-    public class StoreAllViewModel
+    public class StoreAllViewModel : IStoreDetailsModel
     {
         public int Id { get; set; }
         public string Title { get; set; } = null!;

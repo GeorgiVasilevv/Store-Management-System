@@ -124,7 +124,7 @@ namespace StoreManagementSystem.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int id, string information)
         {
             bool storeExists = await storeService.ExistsByIdAsync(id);
 
@@ -138,6 +138,13 @@ namespace StoreManagementSystem.Controllers
             try
             {
                 StoreDetailsViewModel storeDetailsViewModel = await storeService.DetailsAsync(id);
+
+                if (storeDetailsViewModel.GetUrlInformation() != information)
+                {
+                    TempData[ErrorMessage] = "This store doesnt exist!";
+
+                    return RedirectToAction("All", "Store");
+                }
 
                 return View(storeDetailsViewModel);
             }

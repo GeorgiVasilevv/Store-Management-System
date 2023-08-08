@@ -75,8 +75,17 @@ namespace StoreManagementSystem
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapDefaultControllerRoute();
-            app.MapRazorPages();
+            app.UseEndpoints(config =>
+            {
+                config.MapControllerRoute(
+                    name: "ProtectingUrlRoute",
+                    pattern: "/{controller}/{action}/{id}/{information}", 
+                    defaults: new { Controller = "Store", Action = "Details"});
+
+                config.MapDefaultControllerRoute();
+                config.MapRazorPages();
+
+            });
 
             app.Run();
         }

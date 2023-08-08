@@ -1,6 +1,8 @@
-﻿namespace StoreManagementSystem.Core.ViewModels.Home
+﻿using StoreManagementSystem.Core.Models.ViewModels.Store.Interfaces;
+
+namespace StoreManagementSystem.Core.ViewModels.Home
 {
-    public class StoreIndexViewModel
+    public class StoreIndexViewModel : IStoreDetailsModel
     {
         public int Id { get; set; }
         public string Title { get; set; } = null!;

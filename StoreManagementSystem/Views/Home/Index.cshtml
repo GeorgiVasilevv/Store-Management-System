@@ -1,6 +1,7 @@
 ﻿@using StoreManagementSystem.Core.Models.Home;
 @using StoreManagementSystem.Core.ViewModels.Home;
 @using System.Globalization;
+@using StoreManagementSystem.Extensions;
 
 @model StoreCombinedModel
 
@@ -12,12 +13,12 @@
 
 <style>
     .custom-heading {
-        font-size: 3rem; /* Adjust the font size as needed */
-        color: #333; /* Text color */
-        background-color: #a9a9a9; /* Background color */
-        padding: 10px 20px; /* Add padding to create some space around the text */
-        border-radius: 8px; /* Add rounded corners */
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
+        font-size: 3rem;
+        color: #333;
+        background-color: #a9a9a9;
+        padding: 10px 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         margin-bottom: 30px;
     }
 </style>
@@ -71,7 +72,7 @@ else
                     <div class="carousel-caption d-none d-md-block">
                         <h5>
                             <a class="btn btn-dark" asp-controller="Store" asp-action="Details"
-                               asp-route-id="@store.Id"> @store.Title</a>
+                               asp-route-id="@store.Id" asp-route-information="@store.GetUrlInformation()"> @store.Title</a>
                             <button type="button" class="btn btn-dark" href="#">Rating: @store.Rating?.ToString().Replace(",",".")</button>
                         </h5>
                     </div>
@@ -117,7 +118,7 @@ else
             border-right: 3px solid grey;" src="@recentStore.ImageUrl" alt="@recentStore.Title">
                                 <h5 class="text-center">
                                     <a class="btn btn-dark" asp-controller="Store" asp-action="Details"
-                                       asp-route-id="@recentStore.Id"> @recentStore.Title</a>
+                                       asp-route-id="@recentStore.Id" asp-route-information="@recentStore.GetUrlInformation()"> @recentStore.Title</a>
                                 </h5>
                             </div>
                         }
