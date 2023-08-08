@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 using StoreManagementSystem.Core.Interfaces;
 using StoreManagementSystem.Core.Models.ServiceModels;
 using StoreManagementSystem.Core.Models.Store;
@@ -202,7 +203,7 @@ namespace StoreManagementSystem.Controllers
 
             this.TempData[SuccessMessage] = "Store was edited successfully!";
 
-            return RedirectToAction("Details", "Store", new { id });
+            return RedirectToAction("Details", "Store", new { id, information = formModel.GetUrlInformation() });
 
         }
 

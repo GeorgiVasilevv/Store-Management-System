@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using StoreManagementSystem.Core.Models.ViewModels.Store.Interfaces;
+using System.ComponentModel.DataAnnotations;
 using static StoreManagementSystem.Common.EntityModelValidationConstants.Store;
 
 namespace StoreManagementSystem.Core.Models.Store
 {
-    public class StoreAddFormModel
+    public class StoreAddFormModel: IStoreDetailsModel
     {
         public StoreAddFormModel()
         {

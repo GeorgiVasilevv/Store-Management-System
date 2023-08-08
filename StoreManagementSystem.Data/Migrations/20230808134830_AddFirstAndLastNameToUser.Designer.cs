@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StoreManagementSystem.Data.Contexts;
 
@@ -11,9 +12,10 @@ using StoreManagementSystem.Data.Contexts;
 namespace StoreManagementSystem.Data.Migrations
 {
     [DbContext(typeof(StoreManagementDbContext))]
-    partial class StoreManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230808134830_AddFirstAndLastNameToUser")]
+    partial class AddFirstAndLastNameToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -172,7 +174,7 @@ namespace StoreManagementSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
@@ -196,7 +198,7 @@ namespace StoreManagementSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cities", (string)null);
+                    b.ToTable("Cities");
 
                     b.HasData(
                         new
@@ -503,7 +505,7 @@ namespace StoreManagementSystem.Data.Migrations
 
                     b.HasIndex("StoreId");
 
-                    b.ToTable("Clothes", (string)null);
+                    b.ToTable("Clothes");
 
                     b.HasData(
                         new
@@ -535,7 +537,7 @@ namespace StoreManagementSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ClothesSizes", (string)null);
+                    b.ToTable("ClothesSizes");
 
                     b.HasData(
                         new
@@ -579,7 +581,7 @@ namespace StoreManagementSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Provinces", (string)null);
+                    b.ToTable("Provinces");
 
                     b.HasData(
                         new
@@ -776,7 +778,7 @@ namespace StoreManagementSystem.Data.Migrations
 
                     b.HasIndex("StoreId");
 
-                    b.ToTable("Shoes", (string)null);
+                    b.ToTable("Shoes");
                 });
 
             modelBuilder.Entity("StoreManagementSystem.Data.Entities.Models.ShoesSize", b =>
@@ -792,7 +794,7 @@ namespace StoreManagementSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShoesSizes", (string)null);
+                    b.ToTable("ShoesSizes");
 
                     b.HasData(
                         new
@@ -921,7 +923,7 @@ namespace StoreManagementSystem.Data.Migrations
 
                     b.HasIndex("ProvinceId");
 
-                    b.ToTable("Stores", (string)null);
+                    b.ToTable("Stores");
 
                     b.HasData(
                         new
