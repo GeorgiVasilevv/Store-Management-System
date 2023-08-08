@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StoreManagementSystem.Core.Interfaces;
 using StoreManagementSystem.Core.Services;
@@ -23,7 +24,7 @@ namespace StoreManagementSystem
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            
+
 
             builder.Services.AddDefaultIdentity<User>(options =>
             {
@@ -41,6 +42,7 @@ namespace StoreManagementSystem
                 .AddMvcOptions(opt =>
                 {
                     opt.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                    opt.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
                 });
 
             builder.Services.AddApplicationServices();

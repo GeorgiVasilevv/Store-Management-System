@@ -1,7 +1,15 @@
-﻿@model StoreAllViewModel
+﻿@using StoreManagementSystem.Core.Interfaces;
+@using StoreManagementSystem.Extensions;
+@model StoreAllViewModel
+
+@inject IUserService UserService;
+@{
+    bool isOwner = await UserService.HasStoreWithIdAsync(User?.GetId(), Model.Id);
+}
+
 
 <div class="col-md-4" style="margin-bottom: 50px">
-    <div class="card mb-3" >
+    <div class="card mb-3">
         <img class="card-img-top fixed-image" src="@Model.ImageUrl" alt="Store Image">
         <div class="card-body text-center">
             <h4>@Model.Title</h4>
@@ -13,13 +21,16 @@
             <br />
             <a asp-controller="Store" asp-action="Details" asp-route-id="@Model.Id"
                class="btn btn-success">Details</a>
-            @if (this.User.Identity?.IsAuthenticated ?? false)
+            @if (this.User?.Identity?.IsAuthenticated ?? false)
             {
-                <a asp-controller="Store" asp-action="Edit" asp-route-id="@Model.Id"
-                   class="btn btn-warning">Edit</a>
-                <a asp-controller="Store" asp-action="Delete" asp-route-id="@Model.Id"
-                   class="btn btn-danger">Delete</a>
-                <p></p>
+                if (isOwner)
+                {
+                    <a asp-controller="Store" asp-action="Edit" asp-route-id="@Model.Id"
+                       class="btn btn-warning">Edit</a>
+                    <a asp-controller="Store" asp-action="Delete" asp-route-id="@Model.Id"
+                       class="btn btn-danger">Delete</a>
+                    <p></p>
+                }
             }
         </div>
     </div>
