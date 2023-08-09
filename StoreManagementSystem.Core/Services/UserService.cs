@@ -18,6 +18,21 @@ namespace StoreManagementSystem.Core.Services
         {
             this.dbContext = dbContext;
         }
+
+        public async Task<string> GetUserFullName(string email)
+        {
+            User? user = await dbContext
+                .Users
+                .FirstOrDefaultAsync(u=> u.Email == email);
+
+            if (user == null)
+            {
+                return string.Empty;
+            }
+
+            return $"{user.FirstName} {user.LastName}";
+        }
+
         public async Task<bool> HasStoreWithIdAsync(string? userId, int storeId)
         {
             User? user = await dbContext

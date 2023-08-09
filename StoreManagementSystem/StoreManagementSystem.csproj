@@ -25,4 +25,8 @@
     <ProjectReference Include="..\StoreManagementSystem.Data\StoreManagementSystem.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Identity\Pages\Account\" />
+  </ItemGroup>
+
 </Project>
