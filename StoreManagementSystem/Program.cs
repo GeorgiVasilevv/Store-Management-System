@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using StoreManagementSystem.Core.Mapping;
+using StoreManagementSystem.Core.ViewModels.Home;
 using StoreManagementSystem.Data.Contexts;
 using StoreManagementSystem.Data.Entities.Models;
 using StoreManagementSystem.Extensions;
 using StoreManagementSystem.ModelBinders;
-
+using System.Reflection;
 using static StoreManagementSystem.Common.GeneralApplicationConstants;
 
 namespace StoreManagementSystem
@@ -59,6 +61,8 @@ namespace StoreManagementSystem
 
 
             WebApplication app = builder.Build();
+
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
             if (app.Environment.IsDevelopment())
             {

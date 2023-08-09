@@ -1,8 +1,10 @@
-﻿using StoreManagementSystem.Core.Models.ViewModels.Store.Interfaces;
+﻿using StoreManagementSystem.Core.Mapping;
+using StoreManagementSystem.Core.Models.ViewModels.Store.Interfaces;
+using StoreManagementSystem.Data.Entities.Models;
 
 namespace StoreManagementSystem.Core.ViewModels.Home
 {
-    public class StoreIndexViewModel : IStoreDetailsModel
+    public class StoreIndexViewModel : IStoreDetailsModel, IMapFrom<Store>
     {
         public int Id { get; set; }
         public string Title { get; set; } = null!;
