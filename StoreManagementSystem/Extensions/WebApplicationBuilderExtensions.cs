@@ -1,5 +1,9 @@
-﻿using StoreManagementSystem.Core.Interfaces;
+﻿using Microsoft.AspNetCore.Identity;
+using StoreManagementSystem.Core.Interfaces;
 using StoreManagementSystem.Core.Services;
+using StoreManagementSystem.Data.Entities.Models;
+
+using static StoreManagementSystem.Common.GeneralApplicationConstants;
 
 namespace StoreManagementSystem.Extensions
 {
@@ -14,6 +18,38 @@ namespace StoreManagementSystem.Extensions
             services.AddScoped<IUserService, UserService>();
 
             return services;
+        }
+
+        public static IApplicationBuilder SeedAdministrator(this IApplicationBuilder application, string email)
+        {
+            using IServiceScope scopedServices = application.ApplicationServices.CreateScope();
+
+            IServiceProvider serviceProvider = scopedServices.ServiceProvider;
+
+            UserManager<User> userManager = serviceProvider.GetRequiredService<UserManager<User>>();
+
+            RoleManager<IdentityRole<Guid>> roleManager =
+                serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+
+            Task.Run(async () =>
+            {
+                if (await roleManager.RoleExistsAsync(AdminRoleName))
+                {
+                    return;
+                }
+
+                IdentityRole<Guid> role = new IdentityRole<Guid>(AdminRoleName);
+
+                await roleManager.CreateAsync(role);
+
+                User futureAdmin = await userManager.FindByEmailAsync(email);
+
+                await userManager.AddToRoleAsync(futureAdmin, AdminRoleName);
+            })
+            .GetAwaiter()
+            .GetResult();
+
+            return application;
         }
     }
 }
