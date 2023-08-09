@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using StoreManagementSystem.Core.Interfaces;
-using StoreManagementSystem.Core.Services;
 using StoreManagementSystem.Data.Contexts;
 using StoreManagementSystem.Data.Entities.Models;
 using StoreManagementSystem.Extensions;
 using StoreManagementSystem.ModelBinders;
+
+using static StoreManagementSystem.Common.GeneralApplicationConstants;
 
 namespace StoreManagementSystem
 {
@@ -35,6 +35,7 @@ namespace StoreManagementSystem
                 options.Password.RequireLowercase = builder.Configuration.GetValue<bool>("Identity:Password:RequireLowercase");
                 options.Password.RequireUppercase = builder.Configuration.GetValue<bool>("Identity:Password:RequireUppercase");
             })
+                .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<StoreManagementDbContext>();
 
             builder.Services
@@ -80,12 +81,17 @@ namespace StoreManagementSystem
             app.UseAuthentication();
             app.UseAuthorization();
 
+            if (app.Environment.IsDevelopment())
+            {
+                app.SeedAdministrator(AdminEmail);
+            }
+
             app.UseEndpoints(config =>
             {
                 config.MapControllerRoute(
                     name: "ProtectingUrlRoute",
-                    pattern: "/{controller}/{action}/{id}/{information}", 
-                    defaults: new { Controller = "Store", Action = "Details"});
+                    pattern: "/{controller}/{action}/{id}/{information}",
+                    defaults: new { Controller = "Store", Action = "Details" });
 
                 config.MapDefaultControllerRoute();
                 config.MapRazorPages();

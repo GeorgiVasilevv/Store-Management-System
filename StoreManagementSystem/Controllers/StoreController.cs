@@ -179,7 +179,7 @@ namespace StoreManagementSystem.Controllers
             string userId = User.GetId()!;
             bool isUserOwner = await storeService.IsUserOwnerOfStoreAsync(id, userId);
 
-            if (!isUserOwner)
+            if (!isUserOwner && !User.IsUserAdmin())
             {
                 TempData[ErrorMessage] = "You must be the owner of the store.";
 
@@ -221,7 +221,7 @@ namespace StoreManagementSystem.Controllers
             string userId = User.GetId()!;
             bool isUserOwner = await storeService.IsUserOwnerOfStoreAsync(id, userId);
 
-            if (!isUserOwner)
+            if (!isUserOwner && !User.IsUserAdmin())
             {
                 TempData[ErrorMessage] = "You must be the owner of the store.";
 
@@ -257,7 +257,7 @@ namespace StoreManagementSystem.Controllers
             string userId = User.GetId()!;
             bool isUserOwner = await storeService.IsUserOwnerOfStoreAsync(id, userId);
 
-            if (!isUserOwner)
+            if (!isUserOwner && !User.IsUserAdmin())
             {
                 TempData[ErrorMessage] = "You must be the owner of the store.";
 
@@ -293,7 +293,7 @@ namespace StoreManagementSystem.Controllers
             string userId = User.GetId()!;
             bool isUserOwner = await storeService.IsUserOwnerOfStoreAsync(id, userId);
 
-            if (!isUserOwner)
+            if (!isUserOwner && !User.IsUserAdmin())
             {
                 TempData[ErrorMessage] = "You must be the owner of the store.";
 

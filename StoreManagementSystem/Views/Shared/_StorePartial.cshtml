@@ -23,7 +23,7 @@
                class="btn btn-success">Details</a>
             @if (User?.Identity?.IsAuthenticated ?? false)
             {
-                if (isOwner)
+                if (isOwner || User.IsUserAdmin())
                 {
                     <a asp-controller="Store" asp-action="Edit" asp-route-id="@Model.Id"
                        class="btn btn-warning">Edit</a>
