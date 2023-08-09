@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StoreManagementSystem.Core.Interfaces;
+using StoreManagementSystem.Core.Mapping;
 using StoreManagementSystem.Core.Models.ServiceModels;
 using StoreManagementSystem.Core.Models.ServiceModels.Statistics;
 using StoreManagementSystem.Core.Models.Store;
@@ -25,7 +26,7 @@ namespace StoreManagementSystem.Core.Services
         {
             IQueryable<Store> storesQuery = dbContext
                 .Stores
-                .Where(s=> !s.IsDeleted)
+                .Where(s => !s.IsDeleted)
                 .AsQueryable();
 
 
@@ -106,16 +107,19 @@ namespace StoreManagementSystem.Core.Services
 
         public async Task<int> CreateAndReturnIdAsync(StoreAddFormModel storeModel, string ownerId)
         {
-            Store store = new Store()
-            {
-                Title = storeModel.Title,
-                Description = storeModel.Description,
-                Address = storeModel.Address,
-                ImageUrl = storeModel.ImageUrl,
-                CityId = storeModel.CityId,
-                ProvinceId = storeModel.ProvinceId,
-                OwnerId = Guid.Parse(ownerId)
-            };
+            //Store store = new Store()
+            //{
+            //    Title = storeModel.Title,
+            //    Description = storeModel.Description,
+            //    Address = storeModel.Address,
+            //    ImageUrl = storeModel.ImageUrl,
+            //    CityId = storeModel.CityId,
+            //    ProvinceId = storeModel.ProvinceId,
+            //    OwnerId = Guid.Parse(ownerId)
+            //};
+
+            Store store = AutoMapperConfig.MapperInstance.Map<Store>(storeModel);
+            store.OwnerId = Guid.Parse(ownerId);
 
             await dbContext.Stores.AddAsync(store);
             await dbContext.SaveChangesAsync();
@@ -125,10 +129,10 @@ namespace StoreManagementSystem.Core.Services
 
         public async Task DeleteAsync(int storeId)
         {
-            Store storeToDelete = await  dbContext
+            Store storeToDelete = await dbContext
                 .Stores
-                .Where(s=> !s.IsDeleted)
-                .FirstAsync(s=> s.Id == storeId);
+                .Where(s => !s.IsDeleted)
+                .FirstAsync(s => s.Id == storeId);
 
             storeToDelete.IsDeleted = true;
 
@@ -208,8 +212,8 @@ namespace StoreManagementSystem.Core.Services
         {
             return new StatisticsServiceModel()
             {
-                TotalStores =await dbContext.Stores.CountAsync(),
-                TotalProducts =await dbContext.Clothes.CountAsync() + await dbContext.Shoes.CountAsync(),
+                TotalStores = await dbContext.Stores.CountAsync(),
+                TotalProducts = await dbContext.Clothes.CountAsync() + await dbContext.Shoes.CountAsync(),
             };
         }
 

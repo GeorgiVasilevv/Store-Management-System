@@ -1,10 +1,12 @@
-﻿using StoreManagementSystem.Core.Models.ViewModels.Store.Interfaces;
+﻿using AutoMapper;
+using StoreManagementSystem.Core.Mapping;
+using StoreManagementSystem.Core.Models.ViewModels.Store.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using static StoreManagementSystem.Common.EntityModelValidationConstants.Store;
 
 namespace StoreManagementSystem.Core.Models.Store
 {
-    public class StoreAddFormModel: IStoreDetailsModel
+    public class StoreAddFormModel: IStoreDetailsModel, IMapTo<Data.Entities.Models.Store>, IHaveCustomMappings
     {
         public StoreAddFormModel()
         {
@@ -39,5 +41,11 @@ namespace StoreManagementSystem.Core.Models.Store
         [Display(Name = "Province")]
         public int ProvinceId { get; set; }
         public IEnumerable<StoreSelectProvinceFormModel> Provinces { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<StoreAddFormModel, Data.Entities.Models.Store>()
+                .ForMember(s => s.OwnerId, opt => opt.Ignore());
+        }
     }
 }

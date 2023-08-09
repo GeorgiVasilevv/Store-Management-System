@@ -40,6 +40,8 @@ namespace StoreManagementSystem
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<StoreManagementDbContext>();
 
+            builder.Services.AddRecaptchaService();
+
             builder.Services
                 .AddControllersWithViews()
                 .AddMvcOptions(opt =>
