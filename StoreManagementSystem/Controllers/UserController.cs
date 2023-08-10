@@ -3,24 +3,30 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using StoreManagementSystem.Core.Models.ViewModels.User;
 using StoreManagementSystem.Data.Entities.Models;
 
 using static StoreManagementSystem.Common.ToastrNotificationConstants;
+using static StoreManagementSystem.Common.GeneralApplicationConstants;
+
 namespace StoreManagementSystem.Controllers
 {
     public class UserController : BaseController
     {
         private readonly SignInManager<User> signInManager;
         private readonly UserManager<User> userManager;
+        private readonly IMemoryCache memoryCache;
 
         public UserController(
             SignInManager<User> signInManager,
-            UserManager<User> userManager
+            UserManager<User> userManager,
+            IMemoryCache memoryCache
             )
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
+            this.memoryCache = memoryCache;
         }
 
         [HttpGet]
@@ -62,6 +68,8 @@ namespace StoreManagementSystem.Controllers
             }
 
             await signInManager.SignInAsync(user, false);
+
+            memoryCache.Remove(UsersCacheKey);
 
             return RedirectToAction("Index", "Home");
 

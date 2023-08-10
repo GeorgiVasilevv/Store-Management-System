@@ -42,6 +42,8 @@ namespace StoreManagementSystem
 
             builder.Services.AddRecaptchaService();
 
+            builder.Services.AddMemoryCache();
+
             builder.Services
                 .AddControllersWithViews()
                 .AddMvcOptions(opt =>
