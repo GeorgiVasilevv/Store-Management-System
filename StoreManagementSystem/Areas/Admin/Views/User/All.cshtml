@@ -1,4 +1,6 @@
 ﻿@using StoreManagementSystem.Core.Interfaces;
+@using StoreManagementSystem.Middlewares;
+
 @model IEnumerable<UserViewModel>
 @inject IUserService UserService;
 @{
@@ -13,6 +15,8 @@
             <th><label>Full Name</label></th>
             <th><label>Phone Number</label></th>
             <th><label>User Is Owner</label></th>
+            <th><label>Is Online</label></th>
+
         </tr>
     </thead>
     <tbody>
@@ -26,6 +30,16 @@
                 <td><label>@user.PhoneNumber</label></td>
                 <td>
                     @if (isOwner)
+                    {
+                        <label>✔</label>
+                    }
+                    else
+                    {
+                        <label class="text-center">❌</label>
+                    }
+                </td>
+                <td>
+                    @if (OnlineUsersMiddleware.CheckIfUserIsOnline(user.Id))
                     {
                         <label>✔</label>
                     }

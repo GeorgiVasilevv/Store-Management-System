@@ -2,7 +2,7 @@
 using StoreManagementSystem.Core.Interfaces;
 using StoreManagementSystem.Core.Services;
 using StoreManagementSystem.Data.Entities.Models;
-
+using StoreManagementSystem.Middlewares;
 using static StoreManagementSystem.Common.GeneralApplicationConstants;
 
 namespace StoreManagementSystem.Extensions
@@ -50,6 +50,11 @@ namespace StoreManagementSystem.Extensions
             .GetResult();
 
             return application;
+        }
+
+        public static IApplicationBuilder EnableOnlineUsersCheck(this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<OnlineUsersMiddleware>();
         }
     }
 }
