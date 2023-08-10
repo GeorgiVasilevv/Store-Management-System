@@ -7,5 +7,6 @@ namespace StoreManagementSystem.Core.Services.Interfaces
         Task<IEnumerable<StoreSelectProvinceFormModel>> GetAllProvincesOrderedAsync();
         Task<bool> ExistsByIdAsync(int id);
         Task<IEnumerable<string>> AllProvincesNamesAsync();
+
     }
 }

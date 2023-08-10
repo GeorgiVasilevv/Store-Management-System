@@ -141,12 +141,13 @@ namespace StoreManagementSystem.Core.Services
         public async Task<StoreDetailsViewModel> DetailsAsync(int storeId)
         {
             ProductStoreDetailsViewModel[] allProducts = await dbContext.Products
-                .Where(c => !c.IsDeleted && c.StoreId == storeId)
-                .Select(c => new ProductStoreDetailsViewModel
+                .Where(p => !p.IsDeleted && p.StoreId == storeId)
+                .Select(p => new ProductStoreDetailsViewModel
                 {
-                    Title = c.Title,
-                    ImageUrl = c.ImageUrl,
-                    Price = c.Price,
+                    Id = p.Id,
+                    Title = p.Title,
+                    ImageUrl = p.ImageUrl,
+                    Price = p.Price,
                 })
                 .ToArrayAsync();
 

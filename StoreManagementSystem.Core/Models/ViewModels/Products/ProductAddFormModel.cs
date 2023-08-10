@@ -5,6 +5,12 @@ namespace StoreManagementSystem.Core.Models.ViewModels.Products
 {
     public class ProductAddFormModel
     {
+        public ProductAddFormModel()
+        {
+            Conditions = new List<ProductSelectConditionFormModel>();
+            Categories = new List<ProductSelectCategoryFormModel>();
+        }
+
         [Required]
         [StringLength(TitleMaxLength , MinimumLength = TitleMinLength)]
         [Display(Name = "Name")]
@@ -18,8 +24,9 @@ namespace StoreManagementSystem.Core.Models.ViewModels.Products
         [Required]
         public decimal Price { get; set; }
 
-        [Required]
-        public int Condition { get; set; }
+        [Display(Name = "Condition")]
+        public int ConditionId{ get; set; }
+        public IEnumerable<ProductSelectConditionFormModel> Conditions { get; set; } = null!;
 
         [Required]
         [StringLength(UrlMaxLength)]
@@ -27,6 +34,7 @@ namespace StoreManagementSystem.Core.Models.ViewModels.Products
         [RegularExpression("(http)?s?:?(\\/\\/[^\"']*\\.(?:png|jpg|jpeg|gif|png|svg))", ErrorMessage = "Not a valid link.")]
         public string ImageUrl { get; set; } = null!;
 
+        [Display(Name = "Category")]
         public int CategoryId { get; set; }
         public IEnumerable<ProductSelectCategoryFormModel> Categories { get; set; } = null!;
     }

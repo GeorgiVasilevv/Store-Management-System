@@ -1,0 +1,56 @@
+﻿@model ProductAddFormModel
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <form method="post">
+            <div class="card-body">
+                <div class="text-center mb-3">
+                    <label asp-for="Title">Name</label>
+                    <input asp-for="Title" class="form-control" placeholder="">
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="text-center mb-3">
+                    <label asp-for="Description">Description</label>
+                    <textarea asp-for="Description" rows="4" class="form-control" placeholder=""></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="text-center mb-3">
+                    <label asp-for="Price">Price</label>
+                    <input asp-for="Price" class="form-control" placeholder="">
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="text-center mb-3">
+                    <label asp-for="ImageUrl">Image Link</label>
+                    <input asp-for="ImageUrl" class="form-control" placeholder="">
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+                <div class="text-center mb-3">
+                    <label asp-for="ConditionId">Condition</label>
+                    <select asp-for="ConditionId" class="form-control">
+                        <option value="">Select a condition...</option>
+                        @foreach (var condition in Model.Conditions)
+                        {
+                            <option value="@condition.Id">@condition.Title</option>
+                        }
+                    </select>
+                    <span asp-validation-for="ConditionId" class="text-danger"></span>
+                </div>
+                <div class="text-center mb-3">
+                    <label asp-for="CategoryId">Category</label>
+                    <select asp-for="CategoryId" class="form-control">
+                        <option value="">Select a category...</option>
+                        @foreach (var category in Model.Categories)
+                        {
+                            <option value="@category.Id">@category.Title</option>
+                        }
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

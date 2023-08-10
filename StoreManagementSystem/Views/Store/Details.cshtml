@@ -79,7 +79,7 @@
                     <a asp-controller="Store" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit Store</a>
                     <a asp-controller="Store" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete Store</a>
                     <div class="container" style="margin-top: 80px">
-                        <a asp-controller="Product" asp-action="Add" class="btn btn-success">Add Product</a>
+                        <a asp-controller="Product" asp-action="Add" asp-route-id="@Model.Id" class="btn btn-success">Add Product</a>
                     </div>
                 </div>
             }
@@ -104,7 +104,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">@item.Title</h5>
                                     <p class="card-text">Price: £@item.Price</p>
-                                    <a asp-controller="Product" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-details">Details</a>
+                                    <a asp-controller="Product" asp-action="Details" asp-route-id="@item.Id" asp-route-storeId="@Model.Id" asp-route-information="@Model.GetUrlInformation()" class="btn btn-details">Details</a>
                                 </div>
                             </div>
                         </div>

@@ -1,44 +1,14 @@
-﻿@{
-    ViewData["Title"] = "Choose Items to Add";
+﻿@model ProductAddFormModel
+@{
+    ViewBag.Title = "Add Product";
 }
 
-<style>
-    .item {
-        border: 1px solid #ccc;
-        padding: 20px;
-        margin: 10px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        font-size: 24px;
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<partial name="_ProductFormPartial" model="@Model"></partial>
+
+@section Scripts
+    {
+    <partial name="_ValidationScriptsPartial">
     }
-
-        .item img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 10px;
-        }
-</style>
-
-
-<div class="container text-center mt-5">
-    <h2>Choose what to add</h2>
-    <div class="row mt-4">
-        <div class="col-lg-6">
-            <div class="item">
-                <h3>Shoes</h3>
-                <img src="https://hips.hearstapps.com/hmg-prod/images/cushioned-shoes-15408-1632754154.jpg" alt="Shoes">
-                <a asp-action="Add" asp-controller="Shoes" class="btn btn-primary">Add</a>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="item">
-                <h3>Clothing</h3>
-                <img src="https://imgv3.fotor.com/images/blog-cover-image/How-to-Take-Pictures-of-Clothes-to-Sell-Online-in-2023-Fotor-Blog.jpg" alt="Clothing">
-                <a asp-action="Add" asp-controller="Clothing" class="btn btn-primary">Add</a>
-            </div>
-        </div>
-    </div>
-</div>
-
