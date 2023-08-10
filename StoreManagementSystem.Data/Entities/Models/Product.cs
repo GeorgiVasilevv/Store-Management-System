@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using StoreManagementSystem.Data.Entities.Enums;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static StoreManagementSystem.Common.EntityModelValidationConstants.Shoes;
+using System.ComponentModel.DataAnnotations;
+using static StoreManagementSystem.Common.EntityModelValidationConstants.Product;
+
 namespace StoreManagementSystem.Data.Entities.Models
 {
-    public class Shoes
+    public class Product
     {
         //TODO Add Comments
-        public Shoes()
+        public Product()
         {
             IsDeleted = false;
         }
@@ -19,32 +19,27 @@ namespace StoreManagementSystem.Data.Entities.Models
         [MaxLength(TitleMaxLength)]
         public string Title { get; set; } = null!;
 
-        [Required]
         [MaxLength(DescriptionMaxLength)]
+        [Required]
         public string Description { get; set; } = null!;
 
         [Column(TypeName = "DECIMAL(18, 2)")]
         [Required]
         public decimal Price { get; set; }
 
-        [Required]
-        public int AvailableQuantity { get; set; }
 
         [Required]
-        public Condition Condition { get; set; }
+        [ForeignKey(nameof(Condition))]
+        public int ConditionId { get; set; }
+        public Condition Condition { get; set; } = null!;
 
-
-        [Required]
-        [ForeignKey(nameof(ShoesSize))]
-        public int SizeId { get; set; } 
-        public ShoesSize ShoesSize { get; set; } = null!;
 
         [Required]
         [MaxLength(UrlMaxLength)]
         public string ImageUrl { get; set; } = null!;
 
-        [ForeignKey(nameof(Category))]
         [Required]
+        [ForeignKey(nameof(Category))]
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; } = null!;
 

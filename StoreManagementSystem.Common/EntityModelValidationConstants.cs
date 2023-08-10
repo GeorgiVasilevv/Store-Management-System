@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace StoreManagementSystem.Common
 {
     public static class EntityModelValidationConstants
@@ -27,20 +22,14 @@ namespace StoreManagementSystem.Common
             public const int TitleMaxLength = 30;
 
         }
-        public static class Shoes
+        
+        public static class Product 
         {
             public const int TitleMinLength = 5;
             public const int TitleMaxLength = 40;
 
-            public const int DescriptionMinLength = 5;
-            public const int DescriptionMaxLength = 100;
-
-            public const int UrlMaxLength = 2048;
-        }
-        public static class Clothing
-        {
-            public const int TitleMinLength = 5;
-            public const int TitleMaxLength = 40;
+            public const string PriceMinValue = "0";
+            public const string PriceMaxValue = "5000";
 
             public const int DescriptionMinLength = 5;
             public const int DescriptionMaxLength = 100;
@@ -48,7 +37,13 @@ namespace StoreManagementSystem.Common
             public const int UrlMaxLength = 2048;
         }
 
-        public static class User
+        public static class Condition
+        {
+            public const int TitleMinLength = 1;
+            public const int TitleMaxLength = 35;
+        }
+
+            public static class User
         {
             public const int PasswordMinLength = 6;
             public const int PasswordMaxLength = 100;

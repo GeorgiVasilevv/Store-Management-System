@@ -16,6 +16,7 @@ namespace StoreManagementSystem.Extensions
             services.AddScoped<IProvinceService, ProvinceService>();
             services.AddScoped<IStoreService, StoreService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IProductService, ProductService>();
 
             return services;
         }

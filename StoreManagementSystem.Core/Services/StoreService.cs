@@ -9,7 +9,6 @@ using StoreManagementSystem.Core.Models.ViewModels.Store.Enums;
 using StoreManagementSystem.Core.Services.Interfaces;
 using StoreManagementSystem.Data.Contexts;
 using StoreManagementSystem.Data.Entities.Models;
-using System.Linq;
 
 namespace StoreManagementSystem.Core.Services
 {
@@ -141,7 +140,7 @@ namespace StoreManagementSystem.Core.Services
 
         public async Task<StoreDetailsViewModel> DetailsAsync(int storeId)
         {
-            ProductStoreDetailsViewModel[] allProducts = await dbContext.Clothes
+            ProductStoreDetailsViewModel[] allProducts = await dbContext.Products
                 .Where(c => !c.IsDeleted && c.StoreId == storeId)
                 .Select(c => new ProductStoreDetailsViewModel
                 {
@@ -149,14 +148,6 @@ namespace StoreManagementSystem.Core.Services
                     ImageUrl = c.ImageUrl,
                     Price = c.Price,
                 })
-                .Union(dbContext.Shoes
-                .Where(s => !s.IsDeleted && s.StoreId == storeId)
-                .Select(s => new ProductStoreDetailsViewModel
-                {
-                    Title = s.Title,
-                    ImageUrl = s.ImageUrl,
-                    Price = s.Price,
-                }))
                 .ToArrayAsync();
 
             var currentStore = await dbContext.Stores
@@ -213,7 +204,7 @@ namespace StoreManagementSystem.Core.Services
             return new StatisticsServiceModel()
             {
                 TotalStores = await dbContext.Stores.CountAsync(),
-                TotalProducts = await dbContext.Clothes.CountAsync() + await dbContext.Shoes.CountAsync(),
+                TotalProducts = await dbContext.Products.CountAsync()
             };
         }
 

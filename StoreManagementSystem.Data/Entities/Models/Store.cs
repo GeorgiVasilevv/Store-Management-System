@@ -9,8 +9,7 @@ namespace StoreManagementSystem.Data.Entities.Models
         //TODO Add Comments
         public Store()
         {
-            Clothes = new List<Clothing>();
-            Shoes = new List<Shoes>();
+            Products = new List<Product>();
             Rating = 0;
             DateCreated = DateTime.UtcNow;
         }
@@ -56,8 +55,7 @@ namespace StoreManagementSystem.Data.Entities.Models
         public Guid OwnerId { get; set; }
         public virtual User Owner { get; set; } = null!;
 
-        public virtual ICollection<Clothing> Clothes { get; set; }
-        public virtual ICollection<Shoes> Shoes { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
 
         [Required]
         public bool IsDeleted { get; set; }

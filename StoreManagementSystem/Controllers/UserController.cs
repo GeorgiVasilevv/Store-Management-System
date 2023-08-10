@@ -33,6 +33,13 @@ namespace StoreManagementSystem.Controllers
         [AllowAnonymous]
         public IActionResult Register()
         {
+            if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                TempData[ErrorMessage] = "You cannot register while being logged in!";
+
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
@@ -41,6 +48,13 @@ namespace StoreManagementSystem.Controllers
         [ValidateRecaptcha(Action = nameof(Register), ValidationFailedAction = ValidationFailedAction.ContinueRequest)]
         public async Task<IActionResult> Register(RegisterFormModel formModel)
         {
+            if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                TempData[ErrorMessage] = "You cannot register while being logged in!";
+
+                return RedirectToAction("Index", "Home");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(formModel);
@@ -80,6 +94,14 @@ namespace StoreManagementSystem.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(string? returnUrl = null)
         {
+
+            if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                TempData[ErrorMessage] = "You cannot login while being logged in!";
+
+                return RedirectToAction("Index", "Home");
+            }
+
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             LoginFormModel model = new LoginFormModel()
@@ -94,6 +116,12 @@ namespace StoreManagementSystem.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginFormModel model)
         {
+            if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                TempData[ErrorMessage] = "You cannot login while being logged in!";
+                return RedirectToAction("Index", "Home");
+            }
+
             if (!ModelState.IsValid)
             {
                 return this.View(model);

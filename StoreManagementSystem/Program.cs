@@ -43,6 +43,7 @@ namespace StoreManagementSystem
             builder.Services.AddRecaptchaService();
 
             builder.Services.AddMemoryCache();
+            builder.Services.AddResponseCaching();
 
             builder.Services
                 .AddControllersWithViews()
@@ -86,6 +87,8 @@ namespace StoreManagementSystem
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseResponseCaching();
 
             app.UseAuthentication();
             app.UseAuthorization();

@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static StoreManagementSystem.Common.EntityModelValidationConstants.Category;
+using static StoreManagementSystem.Common.EntityModelValidationConstants.Condition;
 
 namespace StoreManagementSystem.Data.Entities.Models
 {
-    public class Category
+    public class Condition
     {
-        //TODO Add Comments
-        public Category()
+        public Condition()
         {
             Products = new List<Product>();
         }

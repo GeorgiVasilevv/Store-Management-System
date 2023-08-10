@@ -10,7 +10,7 @@ namespace StoreManagementSystem.Data.Configurations
         {
             builder.HasData(SeedPronvinces());
         }
-        
+
         private Province[] SeedPronvinces()
         {
             ICollection<Province> provinces = new List<Province>();
@@ -19,7 +19,7 @@ namespace StoreManagementSystem.Data.Configurations
 
             province = new Province()
             {
-                Id=1,
+                Id = 1,
                 Title = "Blagoevgrad"
             };
             provinces.Add(province);

@@ -3,11 +3,6 @@ using StoreManagementSystem.Core.Models.ViewModels.User;
 using StoreManagementSystem.Core.Services.Interfaces;
 using StoreManagementSystem.Data.Contexts;
 using StoreManagementSystem.Data.Entities.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StoreManagementSystem.Core.Services
 {

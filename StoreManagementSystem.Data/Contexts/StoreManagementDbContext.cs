@@ -11,17 +11,14 @@ namespace StoreManagementSystem.Data.Contexts
         public StoreManagementDbContext(DbContextOptions<StoreManagementDbContext> options)
             : base(options)
         {
-
         }
 
         public DbSet<Category> Categories { get; set; } = null!;
-        public DbSet<Clothing> Clothes { get; set; } = null!;
-        public DbSet<Shoes> Shoes { get; set; } = null!;
-        public DbSet<ShoesSize> ShoesSizes { get; set; } = null!;
+        public DbSet<Product> Products { get; set; } = null!;
         public DbSet<Store> Stores { get; set; } = null!;
-        public DbSet<ClothingSize> ClothesSizes { get; set; } = null!;
         public DbSet<City> Cities { get; set; } = null!;
         public DbSet<Province> Provinces { get; set; } = null!;
+        public DbSet<Condition> Conditions { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
