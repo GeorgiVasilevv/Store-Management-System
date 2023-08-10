@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StoreManagementSystem.Core.Interfaces;
 using StoreManagementSystem.Core.Models.Store;
+using StoreManagementSystem.Core.Services.Interfaces;
 using StoreManagementSystem.Data.Contexts;
 
 namespace StoreManagementSystem.Core.Services

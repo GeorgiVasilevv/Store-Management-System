@@ -3,7 +3,7 @@ using StoreManagementSystem.Core.Models.ServiceModels.Statistics;
 using StoreManagementSystem.Core.Models.Store;
 using StoreManagementSystem.Core.Models.ViewModels.Store;
 
-namespace StoreManagementSystem.Core.Interfaces
+namespace StoreManagementSystem.Core.Services.Interfaces
 {
     public interface IStoreService
     {

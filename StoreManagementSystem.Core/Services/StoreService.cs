@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StoreManagementSystem.Core.Interfaces;
 using StoreManagementSystem.Core.Mapping;
 using StoreManagementSystem.Core.Models.ServiceModels;
 using StoreManagementSystem.Core.Models.ServiceModels.Statistics;
@@ -7,6 +6,7 @@ using StoreManagementSystem.Core.Models.Store;
 using StoreManagementSystem.Core.Models.ViewModels.Products;
 using StoreManagementSystem.Core.Models.ViewModels.Store;
 using StoreManagementSystem.Core.Models.ViewModels.Store.Enums;
+using StoreManagementSystem.Core.Services.Interfaces;
 using StoreManagementSystem.Data.Contexts;
 using StoreManagementSystem.Data.Entities.Models;
 using System.Linq;

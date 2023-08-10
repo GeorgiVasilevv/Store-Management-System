@@ -1,7 +1,7 @@
 ﻿using StoreManagementSystem.Core.ViewModels.Home;
 
 
-namespace StoreManagementSystem.Core.Interfaces
+namespace StoreManagementSystem.Core.Services.Interfaces
 {
     public interface IHomeService
     {

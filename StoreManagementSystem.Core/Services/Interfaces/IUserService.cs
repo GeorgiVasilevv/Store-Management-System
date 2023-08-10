@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StoreManagementSystem.Core.Interfaces
+namespace StoreManagementSystem.Core.Services.Interfaces
 {
     public interface IUserService
     {

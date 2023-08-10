@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using StoreManagementSystem.Core.Interfaces;
 using StoreManagementSystem.Core.Services;
+using StoreManagementSystem.Core.Services.Interfaces;
 using StoreManagementSystem.Data.Entities.Models;
 using StoreManagementSystem.Middlewares;
 using static StoreManagementSystem.Common.GeneralApplicationConstants;

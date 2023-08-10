@@ -1,6 +1,6 @@
 ﻿using StoreManagementSystem.Core.Models.Store;
 
-namespace StoreManagementSystem.Core.Interfaces
+namespace StoreManagementSystem.Core.Services.Interfaces
 {
     public interface IProvinceService
     {

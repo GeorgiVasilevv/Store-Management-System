@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StoreManagementSystem.Core.Interfaces;
 using StoreManagementSystem.Core.Models.ViewModels.User;
+using StoreManagementSystem.Core.Services.Interfaces;
 using StoreManagementSystem.Data.Contexts;
 using StoreManagementSystem.Data.Entities.Models;
 using System;

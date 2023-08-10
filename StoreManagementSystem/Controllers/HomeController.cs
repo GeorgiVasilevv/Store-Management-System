@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StoreManagementSystem.Core.Interfaces;
 using StoreManagementSystem.Core.Models.Home;
+using StoreManagementSystem.Core.Services.Interfaces;
 using StoreManagementSystem.Core.ViewModels.Home;
 using System.Diagnostics;
 using static StoreManagementSystem.Common.GeneralApplicationConstants;

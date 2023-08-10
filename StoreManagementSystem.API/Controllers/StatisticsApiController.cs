@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using StoreManagementSystem.Core.Interfaces;
 using StoreManagementSystem.Core.Models.ServiceModels.Statistics;
+using StoreManagementSystem.Core.Services.Interfaces;
 using System.Net;
 
 namespace StoreManagementSystem.API.Controllers
