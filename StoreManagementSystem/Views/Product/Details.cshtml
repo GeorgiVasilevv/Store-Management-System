@@ -1,8 +1,19 @@
-﻿@model ProductDetailsViewModel
+﻿@using StoreManagementSystem.Core.Services.Interfaces;
+@using StoreManagementSystem.Extensions;
+@model ProductDetailsViewModel
+
+@inject IUserService UserService;
+@{
+    bool isOwner = await UserService.HasProductWithIdAsync(User?.GetId(), Model.Id);
+}
 
 @{
     ViewData["Title"] = "Product Details";
 }
+
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
 
 <div class="container mt-5">
     <div class="row">
@@ -17,8 +28,25 @@
                 <p class="text-center">Type: @Model.CategoryName</p>
                 <p class="text-center">Condition: @Model.ConditionName</p>
                 <div class="text-center">
-                    <button class="btn btn-primary">Order</button>
+                    @if (!isOwner)
+                    {
+                        <button class="btn btn-primary">Order</button>
+                    }
                 </div>
+                @if (User?.Identity?.IsAuthenticated ?? false)
+                {
+                    @if (!isOwner)
+                    {
+                        <button class="btn btn-primary">Order</button>
+                    }
+                    @if (isOwner || User.IsUserAdmin())
+                    {
+                        <div class="text-center mt-3">
+                            <a asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Id" asp-route-storeId="@Model.StoreId" asp-route-information="@Model.Information" class="btn btn-warning btn-edit" style="margin-left: 15px">Edit</a>
+                            <button class="btn btn-danger btn-delete" style="margin-left: 70px">Delete</button>
+                        </div>
+                    }
+                }
             </div>
         </div>
     </div>

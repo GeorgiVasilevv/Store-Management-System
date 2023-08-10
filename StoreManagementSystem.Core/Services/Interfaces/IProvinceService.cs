@@ -1,4 +1,5 @@
 ﻿using StoreManagementSystem.Core.Models.Store;
+using StoreManagementSystem.Core.Models.ViewModels.Products;
 
 namespace StoreManagementSystem.Core.Services.Interfaces
 {
@@ -7,6 +8,7 @@ namespace StoreManagementSystem.Core.Services.Interfaces
         Task<IEnumerable<StoreSelectProvinceFormModel>> GetAllProvincesOrderedAsync();
         Task<bool> ExistsByIdAsync(int id);
         Task<IEnumerable<string>> AllProvincesNamesAsync();
+        
 
     }
 }

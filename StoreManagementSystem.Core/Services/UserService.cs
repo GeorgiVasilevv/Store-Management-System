@@ -59,6 +59,22 @@ namespace StoreManagementSystem.Core.Services
             return $"{user.FirstName} {user.LastName}";
         }
 
+        public async Task<bool> HasProductWithIdAsync(string? userId, int productId)
+        {
+            User? user = await dbContext
+                .Users
+                .Include(u => u.Stores)
+                .ThenInclude(u => u.Products)
+                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            return user.Stores.Any(s => s.Products.Any(p=> p.Id == productId));
+        }
+
         public async Task<bool> HasStoreWithIdAsync(string? userId, int storeId)
         {
             User? user = await dbContext

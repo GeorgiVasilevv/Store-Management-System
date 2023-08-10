@@ -32,12 +32,24 @@ namespace StoreManagementSystem.Controllers
             {
                 TempData[ErrorMessage] = "The Product with the provided id does not exist!";
 
-                return RedirectToAction("Details", "Store" , new { id = storeId , information});
+                return RedirectToAction("Details", "Store", new { id = storeId, information });
+            }
+
+            bool storeExists = await storeService.ExistsByIdAsync(id);
+
+            if (!storeExists)
+            {
+                TempData[ErrorMessage] = "The Store with the provided id does not exist!";
+
+                return RedirectToAction("All", "Store");
             }
 
             try
             {
                 ProductDetailsViewModel productDetails = await productService.DetailsAsync(id);
+
+                productDetails.StoreId = storeId;
+                productDetails.Information = information;
 
                 return View(productDetails);
             }
@@ -149,41 +161,110 @@ namespace StoreManagementSystem.Controllers
 
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Edit(int id)
-        //{
-        //    bool storeExists = await storeService.ExistsByIdAsync(id);
-        //    if (!storeExists)
-        //    {
-        //        TempData[ErrorMessage] = "The Store with the provided id does not exist!";
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id, int storeId, string information)
+        {
+            bool storeExists = await storeService.ExistsByIdAsync(storeId);
+            if (!storeExists)
+            {
+                TempData[ErrorMessage] = "The Store with the provided id does not exist!";
 
-        //        return RedirectToAction("All", "Store");
-        //    }
+                return RedirectToAction("All", "Store");
+            }
 
-        //    string userId = User.GetId()!;
-        //    bool isUserOwner = await storeService.IsUserOwnerOfStoreAsync(id, userId);
+            string userId = User.GetId()!;
+            bool isUserOwner = await storeService.IsUserOwnerOfStoreAsync(storeId, userId);
 
-        //    if (!isUserOwner && !User.IsUserAdmin())
-        //    {
-        //        TempData[ErrorMessage] = "You must be the owner of the store.";
+            if (!isUserOwner && !User.IsUserAdmin())
+            {
+                TempData[ErrorMessage] = "You must be the owner of the store.";
 
-        //        return RedirectToAction("Mine", "Store");
-        //    }
+                return RedirectToAction("Mine", "Store");
+            }
 
-        //    try
-        //    {
-        //        StoreAddFormModel formModel = await storeService.GetStoreForEditByIdAsync(id);
-        //        formModel.Cities = await cityService.GetAllCitiesOrderedAsync();
-        //        formModel.Provinces = await provinceService.GetAllProvincesOrderedAsync();
+            bool productExists = await productService.ExistsByIdAsync(id);
 
-        //        return View(formModel);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return GeneralError();
-        //    }
+            if (!productExists)
+            {
+                TempData[ErrorMessage] = "The Product with the provided id does not exist!";
 
-        //}
+                return RedirectToAction("Details", "Store", new { id = storeId, information });
+            }
+
+            try
+            {
+                ProductAddFormModel formModel = await productService.GetProductForEditByIdAsync(id);
+
+                formModel.Categories = await productService.GetAllCategoriesAsync();
+                formModel.Conditions = await productService.GetAllConditionsAsync();
+
+                return View(formModel);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, int storeId, string information, ProductAddFormModel formModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                formModel.Categories = await productService.GetAllCategoriesAsync();
+                formModel.Conditions = await productService.GetAllConditionsAsync();
+
+                return View(formModel);
+            }
+
+            bool storeExists = await storeService.ExistsByIdAsync(id);
+            if (!storeExists)
+            {
+                TempData[ErrorMessage] = "The Store with the provided id does not exist!";
+
+                return RedirectToAction("All", "Store");
+            }
+
+            string userId = User.GetId()!;
+            bool isUserOwner = await storeService.IsUserOwnerOfStoreAsync(id, userId);
+
+            if (!isUserOwner && !User.IsUserAdmin())
+            {
+                TempData[ErrorMessage] = "You must be the owner of the store.";
+
+                return RedirectToAction("Mine", "Store");
+            }
+
+            bool productExists = await productService.ExistsByIdAsync(id);
+
+            if (!productExists)
+            {
+                TempData[ErrorMessage] = "The Product with the provided id does not exist!";
+
+                return RedirectToAction("Details", "Store", new { id = storeId, information });
+            }
+
+            try
+            {
+                await productService.EditAsync(id, formModel);
+            }
+            catch (Exception)
+            {
+                this.ModelState.AddModelError(string.Empty, "An unexpected error occured while trying to edit your product! Please try again later or contact us!");
+
+                formModel.Categories = await productService.GetAllCategoriesAsync();
+                formModel.Conditions = await productService.GetAllConditionsAsync();
+
+
+                return View(formModel);
+            }
+
+            this.TempData[SuccessMessage] = "Product was edited successfully!";
+
+            return RedirectToAction("Details", "Store", new { id = storeId, information });
+
+        }
 
         private IActionResult GeneralError()
         {

@@ -1,4 +1,5 @@
-﻿using StoreManagementSystem.Core.Models.ViewModels.Products;
+﻿using StoreManagementSystem.Core.Models.Store;
+using StoreManagementSystem.Core.Models.ViewModels.Products;
 
 namespace StoreManagementSystem.Core.Services.Interfaces
 {
@@ -11,5 +12,7 @@ namespace StoreManagementSystem.Core.Services.Interfaces
         Task<bool> ConditionExistsByIdAsync(int id);
         Task<bool> ExistsByIdAsync(int productId);
         Task<ProductDetailsViewModel> DetailsAsync(int productId);
+        Task<ProductAddFormModel> GetProductForEditByIdAsync(int productId);
+        Task EditAsync(int productId, ProductAddFormModel model);
     }
 }

@@ -10,6 +10,7 @@ namespace StoreManagementSystem.Core.Services.Interfaces
     public interface IUserService
     {
         Task<bool> HasStoreWithIdAsync(string? userId, int storeId);
+        Task<bool> HasProductWithIdAsync(string? userId, int productId);
         Task<string> GetUserFullName(string email);
 
         Task<string> GetFullNameByIdAsync(string userId);

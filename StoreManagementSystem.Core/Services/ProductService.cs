@@ -71,6 +71,24 @@ namespace StoreManagementSystem.Core.Services
             return currentProduct;
         }
 
+        public async Task EditAsync(int productId, ProductAddFormModel model)
+        {
+            Product product = await dbContext
+                .Products
+                .Where(p => !p.IsDeleted)
+                .FirstAsync(p => p.Id == productId);
+
+
+            product.Description = model.Description;
+            product.ImageUrl = model.ImageUrl;
+            product.ConditionId = model.ConditionId;
+            product.CategoryId = model.CategoryId;
+            product.Title = model.Title;
+            product.Price = model.Price;
+
+            await dbContext.SaveChangesAsync();
+        }
+
         public async Task<bool> ExistsByIdAsync(int productId)
         {
             bool result = await dbContext
@@ -110,6 +128,25 @@ namespace StoreManagementSystem.Core.Services
                 .ToArrayAsync();
 
             return allConditions;
+        }
+
+        public async Task<ProductAddFormModel> GetProductForEditByIdAsync(int productId)
+        {
+            ProductAddFormModel productModel = await dbContext
+                .Products
+                .Where(p => !p.IsDeleted && p.Id == productId)
+                .Select(p => new ProductAddFormModel()
+                {
+                    CategoryId = p.CategoryId,
+                    ConditionId = p.ConditionId,
+                    Price = p.Price,
+                    Description = p.Description,
+                    ImageUrl = p.ImageUrl,
+                    Title = p.Title
+                })
+                .FirstAsync();
+
+            return productModel;
         }
     }
 }
