@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StoreManagementSystem.Core.Models.ViewModels.User;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,9 @@ namespace StoreManagementSystem.Core.Interfaces
     {
         Task<bool> HasStoreWithIdAsync(string? userId, int storeId);
         Task<string> GetUserFullName(string email);
+
+        Task<string> GetFullNameByIdAsync(string userId);
+        Task<IEnumerable<UserViewModel>> AllAsync();
+        Task<bool> IsUserOwnerOfAnyStoreAsync(string userId);
     }
 }

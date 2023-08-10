@@ -4,6 +4,7 @@ using StoreManagementSystem.Core.Interfaces;
 using StoreManagementSystem.Core.Models.Home;
 using StoreManagementSystem.Core.ViewModels.Home;
 using System.Diagnostics;
+using static StoreManagementSystem.Common.GeneralApplicationConstants;
 
 namespace StoreManagementSystem.Controllers
 {
@@ -19,6 +20,11 @@ namespace StoreManagementSystem.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
+            if (User.IsInRole(AdminRoleName))
+            {
+                return RedirectToAction("Index", "Home", new { Area  = AdminAreaName });
+            }
+
             StoreCombinedModel model = new StoreCombinedModel
             {
                 RecentStores = await homeService.GetNineMostRecentStores(),

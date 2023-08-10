@@ -55,6 +55,7 @@ namespace StoreManagementSystem
             builder.Services.ConfigureApplicationCookie(cfg =>
             {
                 cfg.LoginPath = "/User/Login";
+                cfg.AccessDeniedPath = "/Home/Error/401";
             });
 
             var cultureInfo = new System.Globalization.CultureInfo("en-US");
@@ -94,6 +95,10 @@ namespace StoreManagementSystem
 
             app.UseEndpoints(config =>
             {
+                config.MapControllerRoute(
+                    name: "areas",
+                    pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 config.MapControllerRoute(
                     name: "ProtectingUrlRoute",
                     pattern: "/{controller}/{action}/{id}/{information}",
