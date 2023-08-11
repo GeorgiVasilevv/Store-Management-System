@@ -34,13 +34,15 @@ Store Management System is a worldwide store-product based relation system for o
 ### • Images used as a background are just for presentation purposes
 
 #### • Home page for all users
-![home page](https://user-images.githubusercontent.com/54979873/212572043-f803b4e5-1f4c-4846-8336-d33d1c26e19e.png)
+![Screenshot 2023-08-11 170525](https://github.com/GeorgiVasilevv/Store-Management-System/assets/114688961/148c0348-be33-4bd2-bf23-5989e5a0fac7)
+![image](https://github.com/GeorgiVasilevv/Store-Management-System/assets/114688961/654e632c-623c-4274-88c0-1b1decf3f294)
+![image](https://github.com/GeorgiVasilevv/Store-Management-System/assets/114688961/b4c0f85c-12fa-41b8-95a3-3d1bcf4b905d)
 
-#### • Login home page
-![choose login page](https://user-images.githubusercontent.com/54979873/212572181-81ded331-c180-49dd-8822-4616ee7cdd41.png)
+#### • Login page
+![image](https://github.com/GeorgiVasilevv/Store-Management-System/assets/114688961/80176152-ac1d-4a2b-9d16-dea1156c0b92)
 
-#### • Register home page
-![choose register page](https://user-images.githubusercontent.com/54979873/212572189-215940a7-1234-45b1-9194-12dba73da092.png)
+#### • Register page
+![image](https://github.com/GeorgiVasilevv/Store-Management-System/assets/114688961/3674a307-0323-4c09-8c9b-3f00f71cb2c3)
 
 ### Admin Area
 
