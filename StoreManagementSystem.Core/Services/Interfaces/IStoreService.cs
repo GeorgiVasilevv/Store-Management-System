@@ -18,6 +18,8 @@ namespace StoreManagementSystem.Core.Services.Interfaces
         Task<StoreDeleteDetailsViewModel> GetStoreForDeleteAsync(int storeId);
         Task DeleteAsync(int storeId);
         Task<StatisticsServiceModel> GetStatisticsAsync();
+        bool RatingExists(int rating);
+        Task AddRatingAsync(int rating, int storeId);
 
     }
 }

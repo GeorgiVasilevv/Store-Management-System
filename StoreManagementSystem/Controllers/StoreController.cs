@@ -23,6 +23,69 @@ namespace StoreManagementSystem.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Rate(int id)
+        {
+            string userId = User.GetId()!;
+            bool isUserOwner = await storeService.IsUserOwnerOfStoreAsync(id, userId);
+
+            if (isUserOwner)
+            {
+                TempData[ErrorMessage] = "You must not be the owner of the store.";
+
+                return RedirectToAction("Mine", "Store");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Rate(int rating, int id)
+        {
+            bool ratingExists = storeService.RatingExists(rating);
+
+            if (!ratingExists)
+            {
+                TempData[ErrorMessage] = "You must enter a valid rating.";
+
+                return RedirectToAction("All", "Store");
+            }
+
+            bool storeExists = await storeService.ExistsByIdAsync(id);
+
+            if (!storeExists)
+            {
+                TempData[ErrorMessage] = "The Store with the provided id does not exist!";
+
+                return RedirectToAction("All", "Store");
+            }
+
+            string userId = User.GetId()!;
+            bool isUserOwner = await storeService.IsUserOwnerOfStoreAsync(id, userId);
+
+            if (isUserOwner)
+            {
+                TempData[ErrorMessage] = "You must not be the owner of the store.";
+
+                return RedirectToAction("Mine", "Store");
+            }
+
+
+            try
+            {
+                await storeService.AddRatingAsync(rating, id);
+
+                TempData[SuccessMessage] = "Rating added succesfully.";
+                return RedirectToAction("All", "Store");
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
+
+
+        [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> All([FromQuery] AllStoresQueryModel model)
         {

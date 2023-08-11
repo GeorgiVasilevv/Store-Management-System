@@ -21,6 +21,22 @@ namespace StoreManagementSystem.Core.Services
             this.dbContext = dbContext;
         }
 
+        public async Task AddRatingAsync(int rating, int storeId)
+        {
+            Store? store = await dbContext
+                .Stores
+                .FirstOrDefaultAsync(s=> s.Id == storeId);
+
+            if (store != null)
+            {
+                store.RatingCount++;
+                store.RatingSum += rating;
+                store.Rating = store.RatingSum / store.RatingCount;
+
+                await dbContext.SaveChangesAsync();
+            }
+        }
+
         public async Task<AllStoresFilteredAndPagedServiceModel> AllAsync(AllStoresQueryModel queryModel)
         {
             IQueryable<Store> storesQuery = dbContext
@@ -254,6 +270,11 @@ namespace StoreManagementSystem.Core.Services
                 .AnyAsync(s => s.OwnerId.ToString() == userId);
 
             return isOwner;
+        }
+
+        public bool RatingExists(int rating)
+        {
+            return rating >= 0 && rating <= 10;
         }
     }
 }

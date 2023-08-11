@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using StoreManagementSystem.Data.Entities.Models;
 
@@ -23,6 +24,7 @@ namespace StoreManagementSystem.Data.Configurations
                 Title = "T-Shirt"
             };
             categories.Add(category);
+
 
             return categories.ToArray();
         }

@@ -65,11 +65,22 @@
                 <strong>Description:</strong><br />
                 @Model.Description
             </p>
-            <p>
-                <strong>Location:</strong> @Model.CityName, @Model.Address <br />
-                <strong>Rating:</strong> @Model.Rating / 10.00 <br />
-                <strong>Date Created:</strong> @Model.DateCreated.ToString("yyyy-MM-dd")
-            </p>
+            <div class="d-flex justify-content-between" style="width: 87%">
+                <div>
+                    <p>
+                        <strong>Location:</strong> @Model.CityName, @Model.Address <br />
+                        <strong>Rating:</strong> @Model.Rating / 10.00 <br />
+                        <strong>Date Created:</strong> @Model.DateCreated.ToString("yyyy-MM-dd")
+                    </p>
+                </div>
+                @if (!isOwner)
+                {
+                    <div class="mr-3">
+                        <a asp-controller="Store" asp-action="Rate" asp-route-id="@Model.Id" class="btn btn-primary">Rate Store</a>
+                    </div>
+
+                }
+            </div>
         </div>
         @if (User?.Identity?.IsAuthenticated ?? false)
         {

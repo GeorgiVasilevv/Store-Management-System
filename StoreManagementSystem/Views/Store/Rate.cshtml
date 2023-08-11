@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Rate Store";
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<hr />
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-center">
+        <div style="font-size: 24px;">
+            <p class="mb-3">Rate the Store: 0 - 10</p>
+            <form method="post" asp-action="Rate">
+                <div class="form-group">
+                    <label for="rating" style="font-size: 20px;">Select a rating:</label>
+                    <select class="form-control form-control-lg" id="rating" name="rating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+                <button type="submit" style="margin-left: 30px" class="btn btn-primary btn-lg mt-3">Submit Rating</button>
+            </form>
+        </div>
+    </div>
+</div>

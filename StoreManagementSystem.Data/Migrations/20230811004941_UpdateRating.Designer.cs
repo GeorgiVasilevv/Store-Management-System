@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StoreManagementSystem.Data.Contexts;
 
@@ -11,9 +12,10 @@ using StoreManagementSystem.Data.Contexts;
 namespace StoreManagementSystem.Data.Migrations
 {
     [DbContext(typeof(StoreManagementDbContext))]
-    partial class StoreManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230811004941_UpdateRating")]
+    partial class UpdateRating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -744,8 +746,8 @@ namespace StoreManagementSystem.Data.Migrations
                     b.Property<decimal>("Rating")
                         .HasColumnType("DECIMAL(4,2)");
 
-                    b.Property<decimal>("RatingCount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("RatingCount")
+                        .HasColumnType("int");
 
                     b.Property<int>("RatingSum")
                         .HasColumnType("int");
@@ -771,14 +773,14 @@ namespace StoreManagementSystem.Data.Migrations
                             Id = 1,
                             Address = "ul. Petko R. Slaveikov 36",
                             CityId = 22,
-                            DateCreated = new DateTime(2023, 8, 11, 1, 35, 0, 82, DateTimeKind.Utc).AddTicks(9065),
+                            DateCreated = new DateTime(2023, 8, 11, 0, 49, 41, 227, DateTimeKind.Utc).AddTicks(7775),
                             Description = "This store is made for designer's brands",
                             ImageUrl = "https://cdn.shopify.com/s/files/1/0635/0815/files/claremont-store-iamge_1000x.jpg?v=1667541605",
                             IsDeleted = false,
                             OwnerId = new Guid("f1cca3df-6437-423b-6256-08db7ee9be60"),
                             ProvinceId = 23,
                             Rating = 0m,
-                            RatingCount = 0m,
+                            RatingCount = 0,
                             RatingSum = 0,
                             Title = "Gosho's designer store"
                         },
@@ -787,14 +789,14 @@ namespace StoreManagementSystem.Data.Migrations
                             Id = 2,
                             Address = "ul. Asen Hristoforov 6",
                             CityId = 2,
-                            DateCreated = new DateTime(2023, 8, 11, 1, 35, 0, 82, DateTimeKind.Utc).AddTicks(9079),
+                            DateCreated = new DateTime(2023, 8, 11, 0, 49, 41, 227, DateTimeKind.Utc).AddTicks(7788),
                             Description = "This store has different types of clothing",
                             ImageUrl = "https://bigsee.eu/wp-content/uploads/2022/04/DSC4685.jpg",
                             IsDeleted = false,
                             OwnerId = new Guid("f1cca3df-6437-423b-6256-08db7ee9be60"),
                             ProvinceId = 13,
                             Rating = 0m,
-                            RatingCount = 0m,
+                            RatingCount = 0,
                             RatingSum = 0,
                             Title = "Gosho's store"
                         },
@@ -803,14 +805,14 @@ namespace StoreManagementSystem.Data.Migrations
                             Id = 3,
                             Address = "bul. Cherni Vrah 47",
                             CityId = 1,
-                            DateCreated = new DateTime(2023, 8, 11, 1, 35, 0, 82, DateTimeKind.Utc).AddTicks(9081),
+                            DateCreated = new DateTime(2023, 8, 11, 0, 49, 41, 227, DateTimeKind.Utc).AddTicks(7790),
                             Description = "This store has different types of sneakers",
                             ImageUrl = "https://planomagazine.com/wp-content/uploads/2021/04/Plano-Magazine-Prized-Kicks-sneaker-store-now-open_feature-1170x556.jpg",
                             IsDeleted = false,
                             OwnerId = new Guid("f1cca3df-6437-423b-6256-08db7ee9be60"),
                             ProvinceId = 20,
                             Rating = 0m,
-                            RatingCount = 0m,
+                            RatingCount = 0,
                             RatingSum = 0,
                             Title = "Gosho's sneaker store"
                         },
@@ -819,14 +821,14 @@ namespace StoreManagementSystem.Data.Migrations
                             Id = 4,
                             Address = "ul. Mara Buneva 52",
                             CityId = 1,
-                            DateCreated = new DateTime(2023, 8, 11, 1, 35, 0, 82, DateTimeKind.Utc).AddTicks(9107),
+                            DateCreated = new DateTime(2023, 8, 11, 0, 49, 41, 227, DateTimeKind.Utc).AddTicks(7792),
                             Description = "This store has different types of designer wear",
                             ImageUrl = "https://media.architecturaldigest.com/photos/56045fcfcbec99cc0f9f7574/16:9/w_1280,c_limit/dam-images-daily-2014-10-jill-stuart-jill-stuart-soho.jpg",
                             IsDeleted = false,
                             OwnerId = new Guid("96521533-2970-4085-b6d0-08db81187eb1"),
                             ProvinceId = 20,
                             Rating = 0m,
-                            RatingCount = 0m,
+                            RatingCount = 0,
                             RatingSum = 0,
                             Title = "Vanko's designer store"
                         });

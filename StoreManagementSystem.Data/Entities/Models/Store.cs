@@ -32,6 +32,9 @@ namespace StoreManagementSystem.Data.Entities.Models
         [Column(TypeName = "DECIMAL(4, 2)")]
         public decimal Rating { get; set; }
 
+        public decimal RatingCount { get; set; }
+        public int RatingSum { get; set; }
+
         [Required]
         [MaxLength(AddressMaxLength)]
         public string Address { get; set; } = null!;
