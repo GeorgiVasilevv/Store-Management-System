@@ -295,7 +295,7 @@ namespace StoreManagementSystem.Core.Services
         {
             bool isOwner = await dbContext
                 .Stores
-                .Where(s => !s.IsDeleted && s.OwnerId.ToString() == userId)
+                .Where(s => !s.IsDeleted && s.OwnerId.ToString().ToLower() == userId.ToLower())
                 .AnyAsync(s=> s.Orders.Any(o => o.Id == orderId));
 
             return isOwner;
@@ -306,7 +306,7 @@ namespace StoreManagementSystem.Core.Services
             bool isOwner = await dbContext
                 .Stores
                 .Where(s => !s.IsDeleted && s.Id == storeId)
-                .AnyAsync(s => s.OwnerId.ToString() == userId);
+                .AnyAsync(s => s.OwnerId.ToString().ToLower() == userId.ToLower());
 
             return isOwner;
         }

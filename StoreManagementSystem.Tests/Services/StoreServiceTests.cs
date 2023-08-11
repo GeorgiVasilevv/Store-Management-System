@@ -132,7 +132,7 @@ namespace StoreManagementSystem.Tests.Services
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.That(result.Count(), Is.EqualTo(3)); 
+            Assert.That(result.Count(), Is.EqualTo(2)); 
         }
 
         [Test]
@@ -338,6 +338,74 @@ namespace StoreManagementSystem.Tests.Services
 
             // Assert
             Assert.IsFalse(isOwner);
+        }
+
+        [Test]
+        public async Task IsUserOwnerOfStoreAsyncShouldReturnTrueForOwner()
+        {
+            // Arrange
+            int storeId = 2; 
+            string ownerId = "F1CCA3DF-6437-423B-6256-08DB7EE9BE60"; 
+
+            // Act
+            var isOwner = await storeService.IsUserOwnerOfStoreAsync(storeId, ownerId);
+
+            // Assert
+            Assert.IsTrue(isOwner);
+        }
+
+        [Test]
+        public async Task IsUserOwnerOfStoreAsyncShouldReturnFalseForNonOwner()
+        {
+            // Arrange
+            int storeId = 1; 
+            string nonOwnerId = "NonExistentUserId"; 
+
+            // Act
+            var isOwner = await storeService.IsUserOwnerOfStoreAsync(storeId, nonOwnerId);
+
+            // Assert
+            Assert.IsFalse(isOwner);
+        }
+
+        [Test]
+        public async Task OrderExistsAsyncShouldReturnTrueForExistingOrder()
+        {
+            // Arrange
+            int existingOrderId = 1; 
+            // Act
+            var exists = await storeService.OrderExistsAsync(existingOrderId);
+
+            // Assert
+            Assert.IsTrue(exists);
+        }
+
+        [Test]
+        public async Task OrderExistsAsyncShouldReturnFalseForNonExistingOrder()
+        {
+            // Arrange
+            int nonExistingOrderId = -1; 
+
+            // Act
+            var exists = await storeService.OrderExistsAsync(nonExistingOrderId);
+
+            // Assert
+            Assert.IsFalse(exists);
+        }
+
+
+        [TestCase(0)]
+        [TestCase(5)]
+        [TestCase(10)]
+        [TestCase(-1)]
+        [TestCase(11)]
+        public void RatingExistsShouldReturnExpectedResult(int rating)
+        {
+            // Act
+            bool result = storeService.RatingExists(rating);
+
+            // Assert
+            Assert.IsTrue(result == (rating >= 0 && rating <= 10));
         }
     }
 }

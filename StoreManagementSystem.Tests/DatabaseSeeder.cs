@@ -68,13 +68,14 @@ namespace StoreManagementSystem.Tests
             Order3 = new Order()
             {
                 Id = 3,
-                StoreId = 1,
+                StoreId = 2,
                 ProductId = 1,
                 FirstName = "Bob",
                 LastName = "Marley",
                 Address = "104 St.",
                 City = "Dermanci",
-                UserId = Guid.Parse("F1CCA3DF-6437-423B-6256-08DB7EE9BE60")
+                UserId = Guid.Parse("F1CCA3DF-6437-423B-6256-08DB7EE9BE60"),
+                
             };
 
             Province = new Province()
