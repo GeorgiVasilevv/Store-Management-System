@@ -106,7 +106,7 @@ namespace StoreManagementSystem.Core.Services
         public async Task<IEnumerable<StoreAllViewModel>> AllByUserIdAsync(string userId)
         {
             IEnumerable<StoreAllViewModel> allUserStores = await dbContext.Stores
-                .Where(s => s.OwnerId.ToString() == userId && !s.IsDeleted)
+                .Where(s => s.OwnerId.ToString().ToLower() == userId.ToLower() && !s.IsDeleted)
                 .Select(s => new StoreAllViewModel()
                 {
                     Id = s.Id,
@@ -139,19 +139,19 @@ namespace StoreManagementSystem.Core.Services
 
         public async Task<int> CreateAndReturnIdAsync(StoreAddFormModel storeModel, string ownerId)
         {
-            //Store store = new Store()
-            //{
-            //    Title = storeModel.Title,
-            //    Description = storeModel.Description,
-            //    Address = storeModel.Address,
-            //    ImageUrl = storeModel.ImageUrl,
-            //    CityId = storeModel.CityId,
-            //    ProvinceId = storeModel.ProvinceId,
-            //    OwnerId = Guid.Parse(ownerId)
-            //};
+            Store store = new Store()
+            {
+                Title = storeModel.Title,
+                Description = storeModel.Description,
+                Address = storeModel.Address,
+                ImageUrl = storeModel.ImageUrl,
+                CityId = storeModel.CityId,
+                ProvinceId = storeModel.ProvinceId,
+                OwnerId = Guid.Parse(ownerId)
+            };
 
-            Store store = AutoMapperConfig.MapperInstance.Map<Store>(storeModel);
-            store.OwnerId = Guid.Parse(ownerId);
+            //Store store = AutoMapperConfig.MapperInstance.Map<Store>(storeModel);
+            //store.OwnerId = Guid.Parse(ownerId);
 
             await dbContext.Stores.AddAsync(store);
             await dbContext.SaveChangesAsync();

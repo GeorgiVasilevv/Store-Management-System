@@ -118,7 +118,7 @@ namespace StoreManagementSystem.Core.Services
             {
                 User? user = await dbContext
                     .Users
-                    .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+                    .FirstOrDefaultAsync(u => u.Id.ToString().ToLower() == userId.ToLower());
                 if (user != null)
                 {
                     orderFormModel.Address = user.Address;

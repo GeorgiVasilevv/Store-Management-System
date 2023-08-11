@@ -32,9 +32,68 @@ namespace StoreManagementSystem.Tests
         public static Condition Condition;
         public static Condition Condition2;
 
+        public static Province Province;
+        public static Province Province2;
+        public static Province Province3;
+
+        public static Order Order;
+        public static Order Order2;
+        public static Order Order3;
+
 
         public static void SeedDatabase(StoreManagementDbContext dbContext)
         {
+            Order = new Order()
+            {
+                Id =1,
+                StoreId= 1,
+                ProductId =1,
+                FirstName = "Bob",
+                LastName ="Marley",
+                Address = "104 St.",
+                City = "Dermanci"
+            };
+
+            Order2 = new Order()
+            {
+                Id = 2,
+                StoreId = 1,
+                ProductId = 1,
+                FirstName = "Bob",
+                LastName = "Marley",
+                Address = "104 St.",
+                City = "Dermanci"
+            };
+
+            Order3 = new Order()
+            {
+                Id = 3,
+                StoreId = 1,
+                ProductId = 1,
+                FirstName = "Bob",
+                LastName = "Marley",
+                Address = "104 St.",
+                City = "Dermanci"
+            };
+
+            Province = new Province()
+            {
+                Id = 1,
+                Title = "Blagoevgrad"
+            };
+
+            Province2 = new Province()
+            {
+                Id = 2,
+                Title = "Burgas"
+            };
+
+            Province3 = new Province()
+            {
+                Id = 3,
+                Title = "Dobrich"
+            };
+
             Condition = new Condition()
             {
                 Id = 1,
@@ -171,7 +230,7 @@ namespace StoreManagementSystem.Tests
                 OwnerId = Guid.Parse("F1CCA3DF-6437-423B-6256-08DB7EE9BE60"),
                 Address = "ul. Asen Hristoforov 6",
                 CityId = 2,
-                ProvinceId = 13,
+                ProvinceId = 1,
                 IsDeleted = false
             };
 
@@ -259,9 +318,10 @@ namespace StoreManagementSystem.Tests
                 IsDeleted = false
             };
 
-            
 
 
+
+            dbContext.Users.Add(User);
 
             dbContext.Cities.Add(City);
             dbContext.Cities.Add(City2);
@@ -286,6 +346,14 @@ namespace StoreManagementSystem.Tests
 
             dbContext.Conditions.Add(Condition);
             dbContext.Conditions.Add(Condition2);
+
+            dbContext.Provinces.Add(Province);
+            dbContext.Provinces.Add(Province2);
+            dbContext.Provinces.Add(Province3);
+
+            dbContext.Orders.Add(Order);
+            dbContext.Orders.Add(Order2);
+            dbContext.Orders.Add(Order3);
 
             dbContext.SaveChanges();
         }

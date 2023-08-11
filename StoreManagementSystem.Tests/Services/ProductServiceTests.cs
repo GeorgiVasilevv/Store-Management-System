@@ -32,7 +32,7 @@ namespace StoreManagementSystem.Tests.Services
         }
 
         [Test]
-        public async Task CategoryExistsByIdAsync_ExistingCategory_ShouldReturnTrue()
+        public async Task CategoryExistsByIdAsyncExistingCategoryShouldReturnTrue()
         {
             // Act
             var exists = await productService.CategoryExistsByIdAsync(1);
@@ -42,7 +42,7 @@ namespace StoreManagementSystem.Tests.Services
         }
 
         [Test]
-        public async Task CategoryExistsByIdAsync_NonExistentCategory_ShouldReturnFalse()
+        public async Task CategoryExistsByIdAsyncNonExistentCategoryShouldReturnFalse()
         {
             // Act
             var exists = await productService.CategoryExistsByIdAsync(999); // Assuming category with Id 999 doesn't exist
@@ -52,7 +52,7 @@ namespace StoreManagementSystem.Tests.Services
         }
 
         [Test]
-        public async Task ConditionExistsByIdAsync_ExistingCondition_ShouldReturnTrue()
+        public async Task ConditionExistsByIdAsyncExistingConditionShouldReturnTrue()
         {
             // Act
             var exists = await productService.ConditionExistsByIdAsync(1);
@@ -62,7 +62,7 @@ namespace StoreManagementSystem.Tests.Services
         }
 
         [Test]
-        public async Task ConditionExistsByIdAsync_ExistingCondition_ShouldReturnFalse()
+        public async Task ConditionExistsByIdAsyncExistingConditionShouldReturnFalse()
         {
             // Act
             var exists = await productService.ConditionExistsByIdAsync(999); // Assuming condition with Id 999 doesn't exist
@@ -72,7 +72,7 @@ namespace StoreManagementSystem.Tests.Services
         }
 
         [Test]
-        public async Task CreateAndReturnIdAsync_ShouldCreateProductAndReturnId()
+        public async Task CreateAndReturnIdAsyncShouldCreateProductAndReturnId()
         {
             // Arrange
             var productModel = new ProductAddFormModel
@@ -97,7 +97,7 @@ namespace StoreManagementSystem.Tests.Services
             Assert.That(createdProduct.ImageUrl, Is.EqualTo(productModel.ImageUrl));
             Assert.That(createdProduct.CategoryId, Is.EqualTo(productModel.CategoryId));
             Assert.That(createdProduct.ConditionId, Is.EqualTo(productModel.ConditionId));
-            Assert.That(createdProduct.StoreId, Is.EqualTo(1)); 
+            Assert.That(createdProduct.StoreId, Is.EqualTo(1));
 
             // Clean up - remove the created product from the database
             dbContext.Products.Remove(createdProduct);
@@ -105,7 +105,7 @@ namespace StoreManagementSystem.Tests.Services
         }
 
         [Test]
-        public async Task DeleteAsync_ValidProductId_ShouldSoftDeleteProduct()
+        public async Task DeleteAsyncValidProductIdShouldSoftDeleteProduct()
         {
             // Arrange
 
@@ -116,7 +116,7 @@ namespace StoreManagementSystem.Tests.Services
                 Price = 100,
                 ImageUrl = "https://example.com/test-image.jpg",
                 CategoryId = 1,
-                ConditionId = 1, 
+                ConditionId = 1,
                 IsDeleted = false
             };
 
@@ -133,7 +133,7 @@ namespace StoreManagementSystem.Tests.Services
         }
 
         [Test]
-        public async Task DetailsAsync_ExistingProductId_ShouldReturnProductDetails()
+        public async Task DetailsAsyncExistingProductIdShouldReturnProductDetails()
         {
             // Act
             var productDetails = await productService.DetailsAsync(Product4.Id);
@@ -150,7 +150,7 @@ namespace StoreManagementSystem.Tests.Services
         }
 
         [Test]
-        public async Task EditAsync_ValidProductId_ShouldUpdateProductDetails()
+        public async Task EditAsyncValidProductIdShouldUpdateProductDetails()
         {
             var updatedModel = new ProductAddFormModel
             {
@@ -177,7 +177,7 @@ namespace StoreManagementSystem.Tests.Services
         }
 
         [Test]
-        public async Task ExistsByIdAsync_ExistingProductId_ShouldReturnTrue()
+        public async Task ExistsByIdAsyncExistingProductIdShouldReturnTrue()
         {
             // Act
             var exists = await productService.ExistsByIdAsync(Product3.Id);
@@ -187,7 +187,7 @@ namespace StoreManagementSystem.Tests.Services
         }
 
         [Test]
-        public async Task ExistsByIdAsync_NonExistentProductId_ShouldReturnFalse()
+        public async Task ExistsByIdAsyncNonExistentProductIdShouldReturnFalse()
         {
             // Act
             var exists = await productService.ExistsByIdAsync(999); // Assuming product with ID 999 doesn't exist
@@ -197,10 +197,10 @@ namespace StoreManagementSystem.Tests.Services
         }
 
         [Test]
-        public async Task FillOrderFormModel_WithValidUserId_ShouldFillOrderFormModel()
+        public async Task FillOrderFormModelWithValidUserIdShouldFillOrderFormModel()
         {
 
-            var userId = "F1CCA3DF-6437-423B-6256-08DB7EE9BE60"; 
+            var userId = "F1CCA3DF-6437-423B-6256-08DB7EE9BE60";
 
             var orderFormModel = new OrderFormModel
             {
@@ -214,10 +214,106 @@ namespace StoreManagementSystem.Tests.Services
             var filledOrderFormModel = await productService.FillOrderFormModel(orderFormModel, userId);
 
             // Assert
-            Assert.That(filledOrderFormModel.Address, Is.EqualTo("Test Address"));
-            Assert.That(filledOrderFormModel.FirstName, Is.EqualTo("Pesho"));
-            Assert.That(filledOrderFormModel.LastName, Is.EqualTo("Petrov"));
-            Assert.That(filledOrderFormModel.CityName, Is.EqualTo("Vratsa")); 
+            Assert.That(filledOrderFormModel.Address, Is.EqualTo("Test street 104"));
+            Assert.That(filledOrderFormModel.FirstName, Is.EqualTo("Test"));
+            Assert.That(filledOrderFormModel.LastName, Is.EqualTo("Test"));
+            Assert.That(filledOrderFormModel.CityName, Is.EqualTo("Vratsa"));
         }
+
+        [Test]
+        public async Task GetAllCategoriesAsyncShouldReturnAllCategories()
+        {
+
+            // Act
+            var categories = await productService.GetAllCategoriesAsync();
+
+            // Assert
+            Assert.That(categories.Count(), Is.EqualTo(2));
+            var firstCategory = categories.First();
+            Assert.That(firstCategory.Id, Is.EqualTo(1));
+            Assert.That(firstCategory.Title, Is.EqualTo("T-Shirt"));
+        }
+
+        [Test]
+        public async Task GetAllConditionsAsyncShouldReturnAllConditions()
+        {
+
+            // Act
+            var conditions = await productService.GetAllConditionsAsync();
+
+            // Assert
+            Assert.That(conditions.Count(), Is.EqualTo(2));
+            var firstCondition = conditions.First();
+            Assert.That(firstCondition.Id, Is.EqualTo(1));
+            Assert.That(firstCondition.Title, Is.EqualTo("New"));
+        }
+
+        [Test]
+        public async Task GetProductForDeleteAsyncShouldReturnProductForDelete()
+        {
+            // Arrange
+            var productId = 1;
+
+            // Act
+            var product = await productService.GetProductForDeleteAsync(productId);
+
+            // Assert
+            Assert.IsNotNull(product);
+            Assert.That(product.Title, Is.EqualTo("T-Shirt - GUESS"));
+            Assert.That(product.Description, Is.EqualTo("Made with 100% cotton"));
+            Assert.That(product.Price, Is.EqualTo(50.99M));
+            Assert.That(product.ImageUrl, Is.EqualTo("https://d010205.bibloo.bg/_galerie/varianty/190/1902771-z.jpg"));
+        }
+
+        [Test]
+        public async Task GetProductForEditByIdAsyncShouldReturnProductForEdit()
+        {
+            // Arrange
+            
+            var productId = 1; 
+
+            // Act
+            var productModel = await productService.GetProductForEditByIdAsync(productId);
+
+            // Assert
+            Assert.IsNotNull(productModel);
+            Assert.That(productModel.Title, Is.EqualTo("T-Shirt - GUESS"));
+            Assert.That(productModel.Description, Is.EqualTo("Made with 100% cotton"));
+            Assert.That(productModel.Price, Is.EqualTo(50.99M));
+            Assert.That(productModel.ImageUrl, Is.EqualTo("https://d010205.bibloo.bg/_galerie/varianty/190/1902771-z.jpg"));
+            Assert.That(productModel.CategoryId, Is.EqualTo(1));
+            Assert.That(productModel.ConditionId, Is.EqualTo(1));
+        }
+
+        [Test]
+        public async Task OrderAsyncShouldCreateOrder()
+        {
+            // Arrange
+            var orderFormModel = new OrderFormModel
+            {
+                Address = "Test Address",
+                FirstName = "John",
+                LastName = "Doe",
+                CityName = "Test City"
+            };
+            var productId = 1; 
+            var storeId = 1; 
+            var userId = "F1CCA3DF-6437-423B-6256-08DB7EE9BE60"; 
+
+            // Act
+            await productService.OrderAsync(orderFormModel, productId, storeId, userId);
+
+            // Assert
+            var createdOrder = await dbContext.Orders.FirstOrDefaultAsync(o => o.ProductId == productId);
+
+            Assert.IsNotNull(createdOrder);
+            Assert.That(createdOrder.Address, Is.EqualTo("104 St."));
+            Assert.That(createdOrder.FirstName, Is.EqualTo("Bob"));
+            Assert.That(createdOrder.LastName, Is.EqualTo("Marley"));
+            Assert.That(createdOrder.City, Is.EqualTo("Dermanci"));
+            Assert.That(createdOrder.ProductId, Is.EqualTo(productId));
+            Assert.That(createdOrder.StoreId, Is.EqualTo(storeId));
+        }
+
     }
 }
