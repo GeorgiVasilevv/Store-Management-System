@@ -7,6 +7,7 @@ using StoreManagementSystem.Core.Models.ViewModels.Store;
 using StoreManagementSystem.Core.Services;
 using StoreManagementSystem.Core.Services.Interfaces;
 using StoreManagementSystem.Extensions;
+using System.Configuration;
 using static StoreManagementSystem.Common.ToastrNotificationConstants;
 
 namespace StoreManagementSystem.Controllers
@@ -218,7 +219,7 @@ namespace StoreManagementSystem.Controllers
                 return View(formModel);
             }
 
-            bool storeExists = await storeService.ExistsByIdAsync(id);
+            bool storeExists = await storeService.ExistsByIdAsync(storeId);
             if (!storeExists)
             {
                 TempData[ErrorMessage] = "The Store with the provided id does not exist!";
@@ -227,7 +228,7 @@ namespace StoreManagementSystem.Controllers
             }
 
             string userId = User.GetId()!;
-            bool isUserOwner = await storeService.IsUserOwnerOfStoreAsync(id, userId);
+            bool isUserOwner = await storeService.IsUserOwnerOfStoreAsync(storeId, userId);
 
             if (!isUserOwner && !User.IsUserAdmin())
             {
@@ -265,6 +266,98 @@ namespace StoreManagementSystem.Controllers
             return RedirectToAction("Details", "Store", new { id = storeId, information });
 
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id, int storeId, string information)
+        {
+            bool storeExists = await storeService.ExistsByIdAsync(storeId);
+            if (!storeExists)
+            {
+                TempData[ErrorMessage] = "The Store with the provided id does not exist!";
+
+                return RedirectToAction("All", "Store");
+            }
+
+            string userId = User.GetId()!;
+            bool isUserOwner = await storeService.IsUserOwnerOfStoreAsync(storeId, userId);
+
+            if (!isUserOwner && !User.IsUserAdmin())
+            {
+                TempData[ErrorMessage] = "You must be the owner of the store.";
+
+                return RedirectToAction("Mine", "Store");
+            }
+
+            bool productExists = await productService.ExistsByIdAsync(id);
+
+            if (!productExists)
+            {
+                TempData[ErrorMessage] = "The Product with the provided id does not exist!";
+
+                return RedirectToAction("Details", "Store", new { id = storeId, information });
+            }
+
+            try
+            {
+                ProductDeleteDetailsViewModel productModel =
+                    await productService.GetProductForDeleteAsync(id);
+
+                productModel.StoreId = storeId;
+
+                return View(productModel);
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id, int storeId, string information, ProductDeleteDetailsViewModel formModel)
+        {
+
+
+            bool storeExists = await storeService.ExistsByIdAsync(storeId);
+            if (!storeExists)
+            {
+                TempData[ErrorMessage] = "The Store with the provided id does not exist!";
+
+                return RedirectToAction("All", "Store");
+            }
+
+            string userId = User.GetId()!;
+            bool isUserOwner = await storeService.IsUserOwnerOfStoreAsync(storeId, userId);
+
+            if (!isUserOwner && !User.IsUserAdmin())
+            {
+                TempData[ErrorMessage] = "You must be the owner of the store.";
+
+                return RedirectToAction("Mine", "Store");
+            }
+
+            bool productExists = await productService.ExistsByIdAsync(id);
+
+            if (!productExists)
+            {
+                TempData[ErrorMessage] = "The Product with the provided id does not exist!";
+
+                return RedirectToAction("Details", "Store", new { id = storeId, information });
+            }
+
+            try
+            {
+                await productService.DeleteAsync(id);
+
+                this.TempData[SuccessMessage] = "The product was successfully deleted!";
+
+                return RedirectToAction("Details", "Store", new { id = storeId, information });
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+        }
+
 
         private IActionResult GeneralError()
         {

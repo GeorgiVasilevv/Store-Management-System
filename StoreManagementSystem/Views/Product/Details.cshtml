@@ -43,7 +43,7 @@
                     {
                         <div class="text-center mt-3">
                             <a asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Id" asp-route-storeId="@Model.StoreId" asp-route-information="@Model.Information" class="btn btn-warning btn-edit" style="margin-left: 15px">Edit</a>
-                            <button class="btn btn-danger btn-delete" style="margin-left: 70px">Delete</button>
+                            <a asp-controller="Product" asp-action="Delete" asp-route-id="@Model.Id" asp-route-storeId="@Model.StoreId" asp-route-information="@Model.Information" class="btn btn-danger btn-delete" style="margin-left: 70px">Delete</a>
                         </div>
                     }
                 }

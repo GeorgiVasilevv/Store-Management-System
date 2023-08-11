@@ -52,6 +52,18 @@ namespace StoreManagementSystem.Core.Services
             return product.Id;
         }
 
+        public async Task DeleteAsync(int productId)
+        {
+            Product productToDelete = await dbContext
+            .Products
+               .Where(p => !p.IsDeleted)
+               .FirstAsync(p => p.Id == productId);
+
+            productToDelete.IsDeleted = true;
+
+            await dbContext.SaveChangesAsync();
+        }
+
         public async Task<ProductDetailsViewModel> DetailsAsync(int productId)
         {
             var currentProduct = await dbContext.Products
@@ -128,6 +140,24 @@ namespace StoreManagementSystem.Core.Services
                 .ToArrayAsync();
 
             return allConditions;
+        }
+
+        public async Task<ProductDeleteDetailsViewModel> GetProductForDeleteAsync(int productId)
+        {
+            ProductDeleteDetailsViewModel product = await dbContext
+                .Products
+                .Where(p => !p.IsDeleted && p.Id == productId)
+                .Select(p => new ProductDeleteDetailsViewModel()
+                {
+                    Title = p.Title,
+                    Description = p.Description,
+                    Price = p.Price,
+                    ImageUrl = p.ImageUrl
+                })
+                .FirstAsync();
+
+
+            return product;
         }
 
         public async Task<ProductAddFormModel> GetProductForEditByIdAsync(int productId)
