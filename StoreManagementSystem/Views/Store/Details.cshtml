@@ -86,7 +86,9 @@
         {
             @if (isOwner || User.IsUserAdmin())
             {
+                
                 <div class="col-md-3 text-center" style="padding-top: 15px; padding-right: 70px">
+                    <a asp-controller="Store" asp-action="AllOrders" asp-route-id="@Model.Id" class="btn btn-primary">All Orders</a>
                     <a asp-controller="Store" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit Store</a>
                     <a asp-controller="Store" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete Store</a>
                     <div class="container" style="margin-top: 80px">

@@ -28,8 +28,26 @@ namespace StoreManagementSystem.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Order()
+        public async Task<IActionResult> Order(int id, int storeId)
         {
+            bool productExists = await productService.ExistsByIdAsync(id);
+
+            if (!productExists)
+            {
+                TempData[ErrorMessage] = "The Product with the provided id does not exist!";
+
+                return RedirectToAction("All", "Store");
+            }
+
+            bool storeExists = await storeService.ExistsByIdAsync(storeId);
+
+            if (!storeExists)
+            {
+                TempData[ErrorMessage] = "The Store with the provided id does not exist!";
+
+                return RedirectToAction("All", "Store");
+            }
+
             OrderFormModel model = new OrderFormModel();
 
             string? userId = User?.GetId();
@@ -43,7 +61,54 @@ namespace StoreManagementSystem.Controllers
             {
                 model = await productService.FillOrderFormModel(model, userId);
             }
+
+            model.StoreId = storeId;
+
             return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Order(int id, int storeId, OrderFormModel model)
+        {
+            bool productExists = await productService.ExistsByIdAsync(id);
+
+            if (!productExists)
+            {
+                TempData[ErrorMessage] = "The Product with the provided id does not exist!";
+
+                return RedirectToAction("All", "Store");
+            }
+
+            bool storeExists = await storeService.ExistsByIdAsync(storeId);
+
+            if (!storeExists)
+            {
+                TempData[ErrorMessage] = "The Store with the provided id does not exist!";
+
+                return RedirectToAction("All", "Store");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+
+            try
+            {
+                string? userId = User?.GetId();
+
+                await productService
+                    .OrderAsync(model,id,storeId,userId);
+                this.TempData[SuccessMessage] = "Product was ordered successfully!";
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+            
         }
 
 
@@ -60,7 +125,7 @@ namespace StoreManagementSystem.Controllers
                 return RedirectToAction("Details", "Store", new { id = storeId, information });
             }
 
-            bool storeExists = await storeService.ExistsByIdAsync(id);
+            bool storeExists = await storeService.ExistsByIdAsync(storeId);
 
             if (!storeExists)
             {

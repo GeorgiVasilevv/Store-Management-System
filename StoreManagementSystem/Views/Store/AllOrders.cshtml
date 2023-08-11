@@ -1,0 +1,38 @@
+﻿@model IEnumerable<StoreAllOrdersViewModel>
+@{
+    ViewData["Title"] = "All Orders";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-center">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Address</th>
+                    <th>City</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>@order.FirstName</td>
+                        <td>@order.LastName</td>
+                        <td>@order.Address</td>
+                        <td>@order.City</td>
+                        <td>
+                            <form method="post" asp-action="DeleteOrder" asp-controller="Store" asp-route-id="@order.Id">
+                            <button type="submit" class="btn btn-danger" >X</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

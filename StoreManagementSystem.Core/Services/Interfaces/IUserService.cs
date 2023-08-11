@@ -16,5 +16,6 @@ namespace StoreManagementSystem.Core.Services.Interfaces
         Task<string> GetFullNameByIdAsync(string userId);
         Task<IEnumerable<UserViewModel>> AllAsync();
         Task<bool> IsUserOwnerOfAnyStoreAsync(string userId);
+        Task<bool> UserExists(string? userId);
     }
 }

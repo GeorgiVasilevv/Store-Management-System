@@ -20,6 +20,10 @@ namespace StoreManagementSystem.Core.Services.Interfaces
         Task<StatisticsServiceModel> GetStatisticsAsync();
         bool RatingExists(int rating);
         Task AddRatingAsync(int rating, int storeId);
+        Task<IEnumerable<StoreAllOrdersViewModel>> AllOrdersAsync(int storeId);
+        Task<bool> IsUserOwnerOfOrderAsync(int orderId, string userId);
+        Task<bool> OrderExistsAsync(int orderId);
+        Task DeleteOrderAsync(int id);
 
     }
 }

@@ -120,6 +120,23 @@ namespace StoreManagementSystem.Core.Services
             return allUserStores;
         }
 
+        public async Task<IEnumerable<StoreAllOrdersViewModel>> AllOrdersAsync(int storeId)
+        {
+            IEnumerable<StoreAllOrdersViewModel> allOrders = await dbContext.Orders
+                .Where(o => !o.IsDeleted && o.StoreId == storeId)
+                .Select(o => new StoreAllOrdersViewModel()
+                {
+                    Id = o.Id,
+                    FirstName = o.FirstName,
+                    LastName = o.LastName,
+                    Address = o.Address,
+                    City = o.City,
+                })
+                .ToArrayAsync();
+
+            return allOrders;
+        }
+
         public async Task<int> CreateAndReturnIdAsync(StoreAddFormModel storeModel, string ownerId)
         {
             //Store store = new Store()
@@ -150,6 +167,18 @@ namespace StoreManagementSystem.Core.Services
                 .FirstAsync(s => s.Id == storeId);
 
             storeToDelete.IsDeleted = true;
+
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteOrderAsync(int id)
+        {
+            Order orderToDelete = await dbContext
+            .Orders
+                .Where(s => !s.IsDeleted)
+                .FirstAsync(s => s.Id == id);
+
+            orderToDelete.IsDeleted = true;
 
             await dbContext.SaveChangesAsync();
         }
@@ -262,6 +291,16 @@ namespace StoreManagementSystem.Core.Services
             return storeModel;
         }
 
+        public async Task<bool> IsUserOwnerOfOrderAsync(int orderId, string userId)
+        {
+            bool isOwner = await dbContext
+                .Stores
+                .Where(s => !s.IsDeleted && s.OwnerId.ToString() == userId)
+                .AnyAsync(s=> s.Orders.Any(o => o.Id == orderId));
+
+            return isOwner;
+        }
+
         public async Task<bool> IsUserOwnerOfStoreAsync(int storeId, string userId)
         {
             bool isOwner = await dbContext
@@ -270,6 +309,15 @@ namespace StoreManagementSystem.Core.Services
                 .AnyAsync(s => s.OwnerId.ToString() == userId);
 
             return isOwner;
+        }
+
+        public async Task<bool> OrderExistsAsync(int orderId)
+        {
+            bool exists = await dbContext
+                .Orders
+                .AnyAsync(o => o.Id == orderId);
+
+            return exists;
         }
 
         public bool RatingExists(int rating)

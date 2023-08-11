@@ -376,6 +376,69 @@ namespace StoreManagementSystem.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> DeleteOrder(int id)
+        {
+            string userId = User.GetId()!;
+            bool isUserOwner = await storeService.IsUserOwnerOfOrderAsync(id, userId);
+
+            if (!isUserOwner && !User.IsUserAdmin())
+            {
+                TempData[ErrorMessage] = "You must be the owner of the store.";
+
+                return RedirectToAction("Mine", "Store");
+            }
+
+            bool orderExists = await storeService.OrderExistsAsync(id);
+            if (!orderExists)
+            {
+                TempData[ErrorMessage] = "The Order with the provided id does not exist!";
+
+                return RedirectToAction("All", "Store");
+            }
+
+            try
+            {
+                await storeService.DeleteOrderAsync(id);
+
+                this.TempData[SuccessMessage] = "The order was successfully deleted!";
+
+                return RedirectToAction("Mine", "Store");
+            }
+            catch (Exception)
+            {
+                return GeneralError();
+            }
+
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> AllOrders(int id)
+        {
+            string userId = User.GetId()!;
+            bool isUserOwner = await storeService.IsUserOwnerOfStoreAsync(id, userId);
+
+            if (!isUserOwner && !User.IsUserAdmin())
+            {
+                TempData[ErrorMessage] = "You must be the owner of the store.";
+
+                return RedirectToAction("Mine", "Store");
+            }
+
+            bool storeExists = await storeService.ExistsByIdAsync(id);
+            if (!storeExists)
+            {
+                TempData[ErrorMessage] = "The Store with the provided id does not exist!";
+
+                return RedirectToAction("All", "Store");
+            }
+
+            IEnumerable<StoreAllOrdersViewModel> allOrders = await storeService.AllOrdersAsync(id);
+
+            return View(allOrders);
+        }
+
         private IActionResult GeneralError()
         {
             TempData[ErrorMessage] = "Unexpected error occured! Please try again later or contact us!";

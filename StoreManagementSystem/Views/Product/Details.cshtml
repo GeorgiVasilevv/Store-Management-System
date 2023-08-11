@@ -30,7 +30,7 @@
                 <div class="text-center">
                     @if (!isOwner)
                     {
-                        <a asp-controller="Product" asp-action="Order" asp-route-id="@Model.Id" class="btn btn-primary">Order</a>
+                        <a asp-controller="Product" asp-action="Order" asp-route-id="@Model.Id" asp-route-storeId="@Model.StoreId" class="btn btn-primary">Order</a>
                     }
                 </div>
                 @if (User?.Identity?.IsAuthenticated ?? false)

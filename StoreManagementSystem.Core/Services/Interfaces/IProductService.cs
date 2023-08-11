@@ -1,4 +1,5 @@
 ﻿using StoreManagementSystem.Core.Models.Store;
+using StoreManagementSystem.Core.Models.ViewModels.Order;
 using StoreManagementSystem.Core.Models.ViewModels.Products;
 using StoreManagementSystem.Core.Models.ViewModels.Store;
 
@@ -10,6 +11,8 @@ namespace StoreManagementSystem.Core.Services.Interfaces
         Task<IEnumerable<ProductSelectConditionFormModel>> GetAllConditionsAsync();
         Task<int> CreateAndReturnIdAsync(ProductAddFormModel productModel, int storeId);
         Task<bool> CategoryExistsByIdAsync(int id);
+        Task<OrderFormModel> FillOrderFormModel(OrderFormModel orderFormModel, string? userId);
+        Task OrderAsync(OrderFormModel orderFormModel, int productId, int storeId, string? userId);
         Task<bool> ConditionExistsByIdAsync(int id);
         Task<bool> ExistsByIdAsync(int productId);
         Task<ProductDetailsViewModel> DetailsAsync(int productId);

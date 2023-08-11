@@ -199,5 +199,27 @@ namespace StoreManagementSystem.Core.Services
 
             return productModel;
         }
+
+        public async Task OrderAsync(OrderFormModel orderFormModel, int productId, int storeId, string? userId)
+        {
+            Order order = new Order()
+            {
+                Address = orderFormModel.Address,
+                FirstName = orderFormModel.FirstName,
+                LastName = orderFormModel.LastName,
+                City = orderFormModel.CityName,
+                ProductId = productId,
+                StoreId = storeId,
+                
+            };
+
+            if (userId != null)
+            {
+                order.UserId = Guid.Parse(userId);
+            }
+
+            await dbContext.Orders.AddAsync(order);
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

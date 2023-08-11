@@ -8,6 +8,8 @@ namespace StoreManagementSystem.Core.Models.ViewModels.Order
 {
     public class OrderFormModel
     {
+        public int StoreId { get; set; }
+
         [Required]
         [StringLength(FirstNameMaxLength, MinimumLength = FirstNameMinLength)]
         [Display(Name = "First name")]
