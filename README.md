@@ -8,7 +8,8 @@ Store Management System is a worldwide store-product based relation system for o
 
 ## :floppy_disk: Database Diagram
 
-![databaseDiagram0](https://user-images.githubusercontent.com/54979873/212569224-b6b2ecea-f099-4be5-8627-4d31fcfa2d3c.png)
+![databaseDiagram0]!(https://github.com/GeorgiVasilevv/Store-Management-System/assets/114688961/9404add7-9e25-4b16-9632-b2e12fc0eca9)
+
 
 
 
