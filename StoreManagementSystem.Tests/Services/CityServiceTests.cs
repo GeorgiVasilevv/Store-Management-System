@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using StoreManagementSystem.Core.Models.Store;
+using StoreManagementSystem.Core.Services;
+using StoreManagementSystem.Core.Services.Interfaces;
 using StoreManagementSystem.Data.Contexts;
+using static StoreManagementSystem.Tests.DatabaseSeeder;
 
 namespace StoreManagementSystem.Tests.Services
 {
@@ -8,10 +12,8 @@ namespace StoreManagementSystem.Tests.Services
         private StoreManagementDbContext dbContext;
         private DbContextOptions<StoreManagementDbContext> dbOptions;
 
-        public CityServiceTests()
-        {
-            
-        }
+        private ICityService cityService;
+
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
@@ -21,17 +23,44 @@ namespace StoreManagementSystem.Tests.Services
                 .Options;
 
             dbContext = new StoreManagementDbContext(dbOptions);
+
+            SeedDatabase(dbContext);
+
+            cityService = new CityService(dbContext);
         }
 
-        [SetUp]
-        public void Setup()
+
+        [Test]
+        public async Task ExistsByIdAsyncShoudReturnTrueWhenExits()
         {
+            int CityId = City.Id;
+
+            bool result = await cityService.ExistsByIdAsync(CityId);
+
+            Assert.IsTrue(result);
         }
 
         [Test]
-        public void Test1()
+        public async Task ExistsByIdAsyncShoudReturnFalseWhenExits()
         {
-            Assert.Pass();
+            int wrongCityId = 123123;
+
+            bool result = await cityService.ExistsByIdAsync(wrongCityId);
+
+            Assert.IsFalse(result);
         }
+
+        [Test]
+        public async Task GetAllCitiesOrderedAsyncShoudReturnOneModelWhenExits()
+        {
+
+            var result = await cityService.GetAllCitiesOrderedAsync();
+            var orderedCities = result.ToList();
+
+            Assert.That(orderedCities.Count, Is.EqualTo(2));
+            Assert.That(orderedCities[0].Title, Is.EqualTo(City.Title));
+            Assert.That(orderedCities[1].Title, Is.EqualTo(City2.Title));
+        }
+        
     }
 }

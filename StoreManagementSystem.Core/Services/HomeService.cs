@@ -22,7 +22,14 @@ namespace StoreManagementSystem.Core.Services
                 .Where(s=> s.IsDeleted == false)
                 .OrderByDescending(s=> s.DateCreated)
                 .Take(9)
-                .To<StoreIndexViewModel>()
+                .Select(s => new StoreIndexViewModel()
+                {
+                    Id = s.Id,
+                    Title = s.Title,
+                    DateCreated = s.DateCreated,
+                    ImageUrl = s.ImageUrl,
+                })
+                //.To<StoreIndexViewModel>()
                 .ToArrayAsync();
         }
 
@@ -33,7 +40,14 @@ namespace StoreManagementSystem.Core.Services
                 .Where(s => s.IsDeleted == false)
                 .OrderByDescending(s => s.Rating)
                 .Take(3)
-                .To<StoreIndexViewModel>()
+                .Select(s => new StoreIndexViewModel()
+                {
+                    Id = s.Id,
+                    Title = s.Title,
+                    Rating = s.Rating,
+                    ImageUrl = s.ImageUrl,
+                })
+                //.To<StoreIndexViewModel>()
                 .ToArrayAsync();
         }
     }
