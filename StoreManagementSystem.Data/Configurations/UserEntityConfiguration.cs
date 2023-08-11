@@ -15,6 +15,14 @@ namespace StoreManagementSystem.Data.Configurations
             builder
                 .Property(u => u.LastName)
                 .HasDefaultValue("Test");
+
+            builder
+               .Property(u => u.Address)
+               .HasDefaultValue("Test street 104");
+            builder
+
+               .Property(u => u.CityName)
+               .HasDefaultValue("Vratsa");
         }
     }
 }

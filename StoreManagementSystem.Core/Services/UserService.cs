@@ -99,5 +99,10 @@ namespace StoreManagementSystem.Core.Services
 
                 return isOwner;
         }
+
+        public Task<bool> UserExists(string userId)
+        {
+            return dbContext.Users.AnyAsync(u=> u.Id.ToString() == userId);
+        }
     }
 }

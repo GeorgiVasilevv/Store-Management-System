@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
 using StoreManagementSystem.Core.Models.Store;
+using StoreManagementSystem.Core.Models.ViewModels.Order;
 using StoreManagementSystem.Core.Models.ViewModels.Products;
 using StoreManagementSystem.Core.Models.ViewModels.Store;
 using StoreManagementSystem.Core.Services;
@@ -16,12 +17,35 @@ namespace StoreManagementSystem.Controllers
     {
         private readonly IProductService productService;
         private readonly IStoreService storeService;
+        private readonly IUserService userService;
 
-        public ProductController(IProductService productService, IStoreService storeService)
+        public ProductController(IProductService productService, IStoreService storeService, IUserService userService)
         {
             this.productService = productService;
             this.storeService = storeService;
+            this.userService = userService;
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Order()
+        {
+            OrderFormModel model = new OrderFormModel();
+
+            string? userId = User?.GetId();
+            bool userExists = false;
+            if (userId != null)
+            {
+                userExists = await userService.UserExists(userId);
+            }
+
+            if (userExists)
+            {
+                model = await productService.FillOrderFormModel(model, userId);
+            }
+            return View(model);
+        }
+
 
         [AllowAnonymous]
         [HttpGet]

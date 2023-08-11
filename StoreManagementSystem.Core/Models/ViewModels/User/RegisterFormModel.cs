@@ -35,5 +35,17 @@ namespace StoreManagementSystem.Core.Models.ViewModels.User
         [StringLength(LastNameMaxLength, MinimumLength = LastNameMinLength)]
         [Display(Name = "Last name")]
         public string LastName { get; set; } = null!;
+
+        [Required]
+        [StringLength(AddressMaxLength, MinimumLength = AddressMinLength)]
+        [Display(Name = "Address")]
+        public string Address { get; set; } = null!;
+
+        [Required]
+        [StringLength(CityMaxLength, MinimumLength = CityMinLength)]
+        [Display(Name = "City Name")]
+        public string CityName { get; set; } = null!;
+
+
     }
 }

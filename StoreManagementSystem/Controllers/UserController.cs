@@ -63,7 +63,9 @@ namespace StoreManagementSystem.Controllers
             User user = new User()
             {
                 FirstName = formModel.FirstName,
-                LastName = formModel.LastName
+                LastName = formModel.LastName,
+                Address = formModel.Address,
+                CityName = formModel.CityName,
             };
 
             await userManager.SetEmailAsync(user, formModel.Email);

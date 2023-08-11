@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StoreManagementSystem.Core.Models.ViewModels.Order;
 using StoreManagementSystem.Core.Models.ViewModels.Products;
 using StoreManagementSystem.Core.Services.Interfaces;
 using StoreManagementSystem.Data.Contexts;
@@ -109,6 +110,26 @@ namespace StoreManagementSystem.Core.Services
                .AnyAsync(s => s.Id == productId);
 
             return result;
+        }
+
+        public async Task<OrderFormModel> FillOrderFormModel(OrderFormModel orderFormModel, string? userId)
+        {
+            if (userId != null)
+            {
+                User? user = await dbContext
+                    .Users
+                    .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+                if (user != null)
+                {
+                    orderFormModel.Address = user.Address;
+                    orderFormModel.FirstName = user.FirstName;
+                    orderFormModel.LastName = user.LastName;
+                    orderFormModel.CityName = user.CityName;
+                }
+            }
+
+            return orderFormModel;
+
         }
 
         public async Task<IEnumerable<ProductSelectCategoryFormModel>> GetAllCategoriesAsync()

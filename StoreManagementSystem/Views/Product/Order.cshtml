@@ -1,0 +1,42 @@
+﻿@using StoreManagementSystem.Core.Models.ViewModels.Order;
+@model OrderFormModel
+@{
+    ViewData["Title"] = "Order product";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <form id="registerForm" method="post">
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating mb-2">
+                <input asp-for="FirstName" class="form-control"  aria-required="true" />
+                <label asp-for="FirstName"></label>
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-2">
+                <input asp-for="LastName" class="form-control"  aria-required="true" />
+                <label asp-for="LastName"></label>
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-2">
+                <input asp-for="Address" class="form-control"  aria-required="true" />
+                <label asp-for="Address"></label>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-2">
+                <input asp-for="CityName" class="form-control" aria-required="true" />
+                <label asp-for="CityName"></label>
+                <span asp-validation-for="CityName" class="text-danger"></span>
+            </div>
+            <a asp-action="Register" class="w-100 btn btn-lg btn-primary">Order</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <recaptcha-script />
+    <partial name="_ValidationScriptsPartial" />
+}

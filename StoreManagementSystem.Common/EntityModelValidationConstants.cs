@@ -53,6 +53,12 @@ namespace StoreManagementSystem.Common
 
             public const int LastNameMinLength = 1;
             public const int LastNameMaxLength = 15;
+
+            public const int AddressMinLength = 5;
+            public const int AddressMaxLength = 100;
+
+            public const int CityMinLength = 3;
+            public const int CityMaxLength = 50;
         }
 
         public static class Order
