@@ -73,7 +73,8 @@ namespace StoreManagementSystem.Tests
                 FirstName = "Bob",
                 LastName = "Marley",
                 Address = "104 St.",
-                City = "Dermanci"
+                City = "Dermanci",
+                UserId = Guid.Parse("F1CCA3DF-6437-423B-6256-08DB7EE9BE60")
             };
 
             Province = new Province()

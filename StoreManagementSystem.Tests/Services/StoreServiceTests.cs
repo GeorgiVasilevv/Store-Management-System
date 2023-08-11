@@ -201,10 +201,10 @@ namespace StoreManagementSystem.Tests.Services
         }
 
         [Test]
-        public async Task DetailsAsync_ShouldReturnStoreDetails()
+        public async Task DetailsAsyncShouldReturnStoreDetails()
         {
             // Arrange
-            var storeIdToRetrieve = 1; // Replace with the ID of the store you want to retrieve details for
+            var storeIdToRetrieve = 2;
 
             // Act
             var storeDetails = await storeService.DetailsAsync(storeIdToRetrieve);
@@ -212,8 +212,132 @@ namespace StoreManagementSystem.Tests.Services
             // Assert
             Assert.IsNotNull(storeDetails);
             Assert.That(storeDetails.Id, Is.EqualTo(storeIdToRetrieve));
-            // Add more assertions based on your StoreDetailsViewModel properties
-            // and expected values from your database seeder
+            
+        }
+
+        [Test]
+        public async Task EditAsyncShouldUpdateStoreDetails()
+        {
+            // Arrange
+            var storeIdToEdit = 9; 
+            var newStoreData = new StoreAddFormModel
+            {
+                
+                Address = "New Address",
+                Description = "New Description",
+                ImageUrl = "new-image-url.jpg",
+                ProvinceId = 2, 
+                CityId = 2, 
+                Title = "New Title"
+            };
+
+            // Act
+            await storeService.EditAsync(storeIdToEdit, newStoreData);
+
+            // Assert
+            var editedStore = await dbContext.Stores
+                .Where(s => !s.IsDeleted && s.Id == storeIdToEdit)
+                .FirstOrDefaultAsync();
+
+            Assert.IsNotNull(editedStore);
+            Assert.That(editedStore.Address, Is.EqualTo(newStoreData.Address));
+            Assert.That(editedStore.Description, Is.EqualTo(newStoreData.Description));
+            Assert.That(editedStore.ImageUrl, Is.EqualTo(newStoreData.ImageUrl));
+            Assert.That(editedStore.ProvinceId, Is.EqualTo(newStoreData.ProvinceId));
+            Assert.That(editedStore.CityId, Is.EqualTo(newStoreData.CityId));
+            Assert.That(editedStore.Title, Is.EqualTo(newStoreData.Title));
+        }
+
+        [Test]
+        public async Task ExistsByIdAsyncShouldReturnTrueForExistingStoreId()
+        {
+            // Arrange
+            var existingStoreId = 2;
+            // Act
+            var exists = await storeService.ExistsByIdAsync(existingStoreId);
+
+            // Assert
+            Assert.IsTrue(exists);
+        }
+
+        [Test]
+        public async Task ExistsByIdAsyncShouldReturnFalseForNonExistingStoreId()
+        {
+            // Arrange
+            var nonExistingStoreId = 999;
+
+            // Act
+            var exists = await storeService.ExistsByIdAsync(nonExistingStoreId);
+
+            // Assert
+            Assert.IsFalse(exists);
+        }
+
+        [Test]
+        public async Task GetStatisticsAsyncShouldReturnCorrectStatistics()
+        {
+            // Act
+            var statistics = await storeService.GetStatisticsAsync();
+
+            // Assert
+            Assert.That(statistics.TotalStores, Is.EqualTo(await dbContext.Stores.CountAsync()));
+            Assert.That(statistics.TotalProducts, Is.EqualTo(await dbContext.Products.CountAsync()));
+        }
+
+        [Test]
+        public async Task GetStoreForDeleteAsyncShouldReturnCorrectStoreDetails()
+        {
+            // Arrange
+            int storeId = 2;
+            var storeDescription = "This store has different types of clothing";
+
+            // Act
+            var storeDetails = await storeService.GetStoreForDeleteAsync(storeId);
+
+            // Assert
+            Assert.IsNotNull(storeDetails);
+            Assert.That(storeDetails.Description, Is.EqualTo(storeDescription));
+        }
+
+        [Test]
+        public async Task GetStoreForEditByIdAsyncShouldReturnCorrectStoreModel()
+        {
+            // Arrange
+            int storeId = 2;
+
+            // Act
+            var storeModel = await storeService.GetStoreForEditByIdAsync(storeId);
+
+            // Assert
+            Assert.IsNotNull(storeModel);
+        }
+
+        [Test]
+        public async Task IsUserOwnerOfOrderAsyncShouldReturnTrueForOwner()
+        {
+            // Arrange
+            int orderId = 3; 
+            string ownerId = "F1CCA3DF-6437-423B-6256-08DB7EE9BE60"; 
+
+            // Act
+            var isOwner = await storeService.IsUserOwnerOfOrderAsync(orderId, ownerId);
+
+            // Assert
+            Assert.IsTrue(isOwner);
+        }
+
+        [Test]
+        public async Task IsUserOwnerOfOrderAsyncShouldReturnFalseForNonOwner()
+        {
+            // Arrange
+            int orderId = 1; 
+            string nonOwnerId = "NonExistentUserId"; 
+
+            // Act
+            var isOwner = await storeService.IsUserOwnerOfOrderAsync(orderId, nonOwnerId);
+
+            // Assert
+            Assert.IsFalse(isOwner);
         }
     }
 }
