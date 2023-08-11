@@ -19,6 +19,7 @@ namespace StoreManagementSystem.Data.Contexts
         public DbSet<City> Cities { get; set; } = null!;
         public DbSet<Province> Provinces { get; set; } = null!;
         public DbSet<Condition> Conditions { get; set; } = null!;
+        public DbSet<Order> Orders { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

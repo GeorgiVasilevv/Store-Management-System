@@ -37,7 +37,9 @@
                 {
                     @if (!isOwner)
                     {
-                        <button class="btn btn-primary">Order</button>
+                        <div class="text-center">
+                            <button class="btn btn-primary">Order</button>
+                        </div>
                     }
                     @if (isOwner || User.IsUserAdmin())
                     {

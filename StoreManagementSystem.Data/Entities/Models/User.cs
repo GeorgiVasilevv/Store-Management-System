@@ -12,6 +12,7 @@ namespace StoreManagementSystem.Data.Entities.Models
             Id = Guid.NewGuid();
 
             Stores = new List<Store>();
+            Orders = new List<Order>();
         }
 
         [Required]
@@ -21,6 +22,7 @@ namespace StoreManagementSystem.Data.Entities.Models
         [Required]
         [MaxLength(LastNameMaxLength)]
         public string LastName { get; set; } = null!;
-        public ICollection<Store> Stores { get; set; }
+        public virtual ICollection<Store> Stores { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

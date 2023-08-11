@@ -10,6 +10,7 @@ namespace StoreManagementSystem.Data.Entities.Models
         public Store()
         {
             Products = new List<Product>();
+            Orders = new List<Order>();
             Rating = 0;
             DateCreated = DateTime.UtcNow;
         }
@@ -59,6 +60,7 @@ namespace StoreManagementSystem.Data.Entities.Models
         public virtual User Owner { get; set; } = null!;
 
         public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
 
         [Required]
         public bool IsDeleted { get; set; }

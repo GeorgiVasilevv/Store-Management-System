@@ -10,6 +10,7 @@ namespace StoreManagementSystem.Data.Entities.Models
         //TODO Add Comments
         public Product()
         {
+            Orders = new List<Order>();
             IsDeleted = false;
         }
         [Key]
@@ -50,5 +51,8 @@ namespace StoreManagementSystem.Data.Entities.Models
 
         [Required]
         public bool IsDeleted { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
+
     }
 }

@@ -22,8 +22,8 @@ namespace StoreManagementSystem.Common
             public const int TitleMaxLength = 30;
 
         }
-        
-        public static class Product 
+
+        public static class Product
         {
             public const int TitleMinLength = 5;
             public const int TitleMaxLength = 40;
@@ -43,7 +43,7 @@ namespace StoreManagementSystem.Common
             public const int TitleMaxLength = 35;
         }
 
-            public static class User
+        public static class User
         {
             public const int PasswordMinLength = 6;
             public const int PasswordMaxLength = 100;
@@ -53,6 +53,22 @@ namespace StoreManagementSystem.Common
 
             public const int LastNameMinLength = 1;
             public const int LastNameMaxLength = 15;
+        }
+
+        public static class Order
+        {
+            public const int FirstNameMinLength = 1;
+            public const int FirstNameMaxLength = 15;
+
+            public const int LastNameMinLength = 1;
+            public const int LastNameMaxLength = 15;
+
+            public const int AddressMinLength = 5;
+            public const int AddressMaxLength = 100;
+
+            public const int CityMinLength = 3;
+            public const int CityMaxLength = 50;
+
         }
     }
 }

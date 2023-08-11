@@ -31,6 +31,13 @@ namespace StoreManagementSystem.Data.Configurations
             };
             conditions.Add(condition);
 
+            condition = new Condition()
+            {
+                Id = 3,
+                Title = "Worn Once"
+            };
+            conditions.Add(condition);
+
             return conditions.ToArray();
         }
     }

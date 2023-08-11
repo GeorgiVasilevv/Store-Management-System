@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StoreManagementSystem.Data.Contexts;
 
@@ -11,9 +12,10 @@ using StoreManagementSystem.Data.Contexts;
 namespace StoreManagementSystem.Data.Migrations
 {
     [DbContext(typeof(StoreManagementDbContext))]
-    partial class StoreManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230811014457_SeedDatabase")]
+    partial class SeedDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -501,57 +503,6 @@ namespace StoreManagementSystem.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("StoreManagementSystem.Data.Entities.Models.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StoreId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("StoreId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders");
-                });
-
             modelBuilder.Entity("StoreManagementSystem.Data.Entities.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -842,7 +793,7 @@ namespace StoreManagementSystem.Data.Migrations
                             Id = 1,
                             Address = "ul. Petko R. Slaveikov 36",
                             CityId = 22,
-                            DateCreated = new DateTime(2023, 8, 11, 2, 8, 43, 269, DateTimeKind.Utc).AddTicks(4649),
+                            DateCreated = new DateTime(2023, 8, 11, 1, 44, 57, 697, DateTimeKind.Utc).AddTicks(2579),
                             Description = "This store is made for designer's brands",
                             ImageUrl = "https://cdn.shopify.com/s/files/1/0635/0815/files/claremont-store-iamge_1000x.jpg?v=1667541605",
                             IsDeleted = false,
@@ -858,7 +809,7 @@ namespace StoreManagementSystem.Data.Migrations
                             Id = 2,
                             Address = "ul. Asen Hristoforov 6",
                             CityId = 2,
-                            DateCreated = new DateTime(2023, 8, 11, 2, 8, 43, 269, DateTimeKind.Utc).AddTicks(4664),
+                            DateCreated = new DateTime(2023, 8, 11, 1, 44, 57, 697, DateTimeKind.Utc).AddTicks(2602),
                             Description = "This store has different types of clothing",
                             ImageUrl = "https://bigsee.eu/wp-content/uploads/2022/04/DSC4685.jpg",
                             IsDeleted = false,
@@ -874,7 +825,7 @@ namespace StoreManagementSystem.Data.Migrations
                             Id = 3,
                             Address = "bul. Cherni Vrah 47",
                             CityId = 1,
-                            DateCreated = new DateTime(2023, 8, 11, 2, 8, 43, 269, DateTimeKind.Utc).AddTicks(4667),
+                            DateCreated = new DateTime(2023, 8, 11, 1, 44, 57, 697, DateTimeKind.Utc).AddTicks(2604),
                             Description = "This store has different types of sneakers",
                             ImageUrl = "https://planomagazine.com/wp-content/uploads/2021/04/Plano-Magazine-Prized-Kicks-sneaker-store-now-open_feature-1170x556.jpg",
                             IsDeleted = false,
@@ -890,7 +841,7 @@ namespace StoreManagementSystem.Data.Migrations
                             Id = 4,
                             Address = "ul. Mara Buneva 52",
                             CityId = 1,
-                            DateCreated = new DateTime(2023, 8, 11, 2, 8, 43, 269, DateTimeKind.Utc).AddTicks(4669),
+                            DateCreated = new DateTime(2023, 8, 11, 1, 44, 57, 697, DateTimeKind.Utc).AddTicks(2606),
                             Description = "This store has different types of designer wear",
                             ImageUrl = "https://media.architecturaldigest.com/photos/56045fcfcbec99cc0f9f7574/16:9/w_1280,c_limit/dam-images-daily-2014-10-jill-stuart-jill-stuart-soho.jpg",
                             IsDeleted = false,
@@ -1034,31 +985,6 @@ namespace StoreManagementSystem.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("StoreManagementSystem.Data.Entities.Models.Order", b =>
-                {
-                    b.HasOne("StoreManagementSystem.Data.Entities.Models.Product", "Product")
-                        .WithMany("Orders")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("StoreManagementSystem.Data.Entities.Models.Store", "Store")
-                        .WithMany("Orders")
-                        .HasForeignKey("StoreId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("StoreManagementSystem.Data.Entities.Models.User", "User")
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Store");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("StoreManagementSystem.Data.Entities.Models.Product", b =>
                 {
                     b.HasOne("StoreManagementSystem.Data.Entities.Models.Category", "Category")
@@ -1128,11 +1054,6 @@ namespace StoreManagementSystem.Data.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("StoreManagementSystem.Data.Entities.Models.Product", b =>
-                {
-                    b.Navigation("Orders");
-                });
-
             modelBuilder.Entity("StoreManagementSystem.Data.Entities.Models.Province", b =>
                 {
                     b.Navigation("Stores");
@@ -1140,15 +1061,11 @@ namespace StoreManagementSystem.Data.Migrations
 
             modelBuilder.Entity("StoreManagementSystem.Data.Entities.Models.Store", b =>
                 {
-                    b.Navigation("Orders");
-
                     b.Navigation("Products");
                 });
 
             modelBuilder.Entity("StoreManagementSystem.Data.Entities.Models.User", b =>
                 {
-                    b.Navigation("Orders");
-
                     b.Navigation("Stores");
                 });
 #pragma warning restore 612, 618

@@ -25,6 +25,27 @@ namespace StoreManagementSystem.Data.Configurations
             };
             categories.Add(category);
 
+            category = new Category()
+            {
+                Id = 2,
+                Title = "Shoes"
+            };
+            categories.Add(category);
+
+            category = new Category()
+            {
+                Id = 3,
+                Title = "Dress"
+            };
+            categories.Add(category);
+
+            category = new Category()
+            {
+                Id = 4,
+                Title = "Pants"
+            };
+            categories.Add(category);
+
 
             return categories.ToArray();
         }
