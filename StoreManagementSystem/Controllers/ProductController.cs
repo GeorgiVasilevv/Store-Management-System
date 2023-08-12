@@ -236,7 +236,8 @@ namespace StoreManagementSystem.Controllers
 
                 this.TempData[SuccessMessage] = "Product was added successfully!";
 
-                return RedirectToAction("Details", "Product", new { id = productId });
+
+                return RedirectToAction("All", "Store");
             }
             catch (Exception)
             {
