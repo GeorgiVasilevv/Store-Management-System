@@ -148,7 +148,9 @@ namespace StoreManagementSystem.Controllers
 
                 this.TempData[SuccessMessage] = "Store was added successfully!";
 
-                return RedirectToAction("Details", "Store", new { id = storeId });
+                string information = storeModel.GetUrlInformation();
+
+                return RedirectToAction("Details", "Store", new { id = storeId, information });
             }
             catch (Exception)
             {
